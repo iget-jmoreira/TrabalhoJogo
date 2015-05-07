@@ -79,12 +79,13 @@ public class PasswordRecovery extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			String input_answer, pass1, pass2;
+			String input_answer, pass1, pass2, username;
+			username = PasswordRecovery.this.username;
 			input_answer = PasswordRecovery.this.input_answer.getText();
 			pass1 = String.valueOf(PasswordRecovery.this.input_pass1.getPassword());
 			pass2 = String.valueOf(PasswordRecovery.this.input_pass2.getPassword());
 			Connect conn = new Connect();
-			boolean returned = conn.recovery(PasswordRecovery.this.username, input_answer, pass1, pass2);
+			boolean returned = conn.recovery(username, input_answer, pass1, pass2);
 			if(returned){
 				PasswordRecovery.this.setVisible(false);
 			}

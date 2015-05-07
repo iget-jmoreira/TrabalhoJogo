@@ -25,7 +25,7 @@ public class Connect {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("SELECT * FROM `users` WHERE username='"+username+"' AND password='"+pass+"'");
 			if(rs.next()){
-				Inicio init = new Inicio(username, password);
+				Home init = new Home(username, password);
 				init.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				init.setVisible(true);
 				returned = true;
@@ -63,7 +63,7 @@ public class Connect {
 						stmt.close();
 						stmt = conn.createStatement();
 						stmt.executeUpdate("INSERT INTO users (username, password, email, question, answer) VALUES ('"+username+"','"+pass1+"','"+email+"', '"+question+"', '"+answer+"')");
-						Inicio init = new Inicio(username, pass1);
+						Home init = new Home(username, pass1);
 						init.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 						init.setVisible(true);
 						returned = true;
@@ -128,17 +128,14 @@ public class Connect {
 				Class.forName(this.driver);
 				conn = DriverManager.getConnection(this.server, this.user, this.password);
 				stmt = conn.createStatement();
-				rs = stmt.executeQuery("SELECT * FROM users WHERE username='"+username+"'");
-				System.out.println(rs.getString("answer"));
-				System.out.println(answer);
-				System.out.println("username");
-				if(rs.getString("answer").equals(answer))
+				rs = stmt.executeQuery("SELECT * FROM `users` WHERE username='"+username+"' AND answer='"+answer+"'");
+				if(rs.next())
 				{
 					returned = true;
 					JOptionPane.showMessageDialog(null, "Password Changed!", "Message!", JOptionPane.ERROR_MESSAGE);
-					Index index = new Index();
-					index.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					index.setVisible(true);
+					Home home = new Home();
+					home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					home.setVisible(true);
 				}
 			} catch(ClassNotFoundException e){
 				System.out.println("Erro no Driver "+e.getMessage());
