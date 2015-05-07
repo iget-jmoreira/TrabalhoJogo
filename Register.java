@@ -14,7 +14,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 
-public class CreateUser extends JFrame {
+public class Register extends JFrame {
 	/**
 	 * 
 	 */
@@ -25,7 +25,7 @@ public class CreateUser extends JFrame {
 	JPasswordField input_pass1, input_pass2;
 	JButton submit_register, submit_back;
 	
-	public CreateUser(){
+	public Register(){
 		setTitle("Create New User");
 		GridBagLayout layout = new GridBagLayout();
 		painel.setLayout(layout);
@@ -86,17 +86,17 @@ public class CreateUser extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			String username = CreateUser.this.input_username.getText();
-			String email = CreateUser.this.input_email.getText();
-			String pass1 = String.valueOf(CreateUser.this.input_pass1.getPassword());
-			String pass2 = String.valueOf(CreateUser.this.input_pass2.getPassword());
-			String question = String.valueOf(CreateUser.this.input_question.getText());
-			String answer = String.valueOf(CreateUser.this.input_answer.getText());
+			String username = Register.this.input_username.getText();
+			String email = Register.this.input_email.getText();
+			String pass1 = String.valueOf(Register.this.input_pass1.getPassword());
+			String pass2 = String.valueOf(Register.this.input_pass2.getPassword());
+			String question = String.valueOf(Register.this.input_question.getText());
+			String answer = String.valueOf(Register.this.input_answer.getText());
 			
 			Connect conn = new Connect();
 			boolean returned = conn.cadastra(username, pass1, pass2, email, question, answer);
 			if(returned == true){
-				CreateUser.this.setVisible(false);
+				Register.this.setVisible(false);
 			}
 			
 		}
@@ -108,7 +108,7 @@ public class CreateUser extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			CreateUser.this.setVisible(false);
+			Register.this.setVisible(false);
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e1) {

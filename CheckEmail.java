@@ -14,7 +14,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 
-public class PasswordRecovery extends JFrame{
+public class CheckEmail extends JFrame{
 
 	/**
 	 * 
@@ -27,7 +27,7 @@ public class PasswordRecovery extends JFrame{
 	JPasswordField input_password;
 	JButton submit_back, submit_check;
 
-	public PasswordRecovery(){
+	public CheckEmail(){
 		setTitle("Check Email to Recovery Password");
 		GridBagLayout layout = new GridBagLayout();
 		painel.setLayout(layout);
@@ -62,9 +62,9 @@ public class PasswordRecovery extends JFrame{
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			Connect conn = new Connect();
-			boolean returned = conn.checkEmail(PasswordRecovery.this.input_email.getText());
+			boolean returned = conn.checkEmail(CheckEmail.this.input_email.getText());
 			if(returned == true){
-				PasswordRecovery.this.setVisible(false);
+				CheckEmail.this.setVisible(false);
 			}
 		}
 	}
@@ -73,7 +73,7 @@ public class PasswordRecovery extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			PasswordRecovery.this.setVisible(false);
+			CheckEmail.this.setVisible(false);
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {

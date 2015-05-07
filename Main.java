@@ -8,7 +8,6 @@ public class Main {
 		Index index = new Index();
 		index.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		index.setVisible(true);
-		System.out.println("teste");
 	}
 
 }

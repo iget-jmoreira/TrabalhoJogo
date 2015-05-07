@@ -21,10 +21,10 @@ public class Index extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	JPanel painel = new JPanel();
-	JLabel title, login, password;
+	JLabel login, password;
 	JTextField input_login;
 	JPasswordField input_password;
-	JButton submit_login, submit_create, submit_recovery;
+	JButton submit_login, submit_register, submit_recovery;
 	
 	public Index(){
 		setTitle("Login");
@@ -34,9 +34,6 @@ public class Index extends JFrame {
 		double width = (screenSize.getWidth() / 2) - 200;
 		double height = (screenSize.getHeight() / 2) - 190;
 		setBounds((int) width, (int) height, 400, 380);
-		
-		title = new JLabel("<html><img src='C:\\Users\\Airton Filho\\Desktop\\aaaaa.png' /><p style='font-size:20px; color:#000099; font-weight:none;'>Tetris</p></html>");
-		painel.add(title, new GBC(1,0,1,1).setWeight(1, 1).setAnchor(GBC.CENTER));
 		
 		login = new JLabel("Login");
 		painel.add(login, new GBC(1,1,1,1).setWeight(1, 1).setAnchor(GBC.WEST).setInsets(10, 40, 3, 0).setFill(GBC.BOTH));
@@ -50,17 +47,17 @@ public class Index extends JFrame {
 		
 		submit_login = new JButton("Login");
 		painel.add(submit_login, new GBC(1,5,1,1).setWeight(1, 0.3).setAnchor(GBC.NORTH).setInsets(0, 20, 10, 20).setFill(GBC.BOTH));
-		submit_create = new JButton("Create New");
-		painel.add(submit_create, new GBC(1,6,1,1).setWeight(1, 0.2).setAnchor(GBC.NORTH).setInsets(0, 35, 10, 35).setFill(GBC.BOTH));
-		submit_recovery = new JButton("Recovery Password");
+		submit_register = new JButton("Create Register");
+		painel.add(submit_register, new GBC(1,6,1,1).setWeight(1, 0.2).setAnchor(GBC.NORTH).setInsets(0, 35, 10, 35).setFill(GBC.BOTH));
+		submit_recovery = new JButton("Password Recovery");
 		painel.add(submit_recovery, new GBC(1,7,1,1).setWeight(1, 0.2).setAnchor(GBC.NORTH).setInsets(0, 50, 15, 50).setFill(GBC.BOTH));
 		
-		ClickLogin click_login = new ClickLogin();
-		submit_login.addActionListener(click_login);
-		ClickCreate click_create = new ClickCreate();
-		submit_create.addActionListener(click_create);
-		ClickRecovery click_recovery = new ClickRecovery();
-		submit_recovery.addActionListener(click_recovery);
+		ClickLogin login = new ClickLogin();
+		submit_login.addActionListener(login);
+		ClickRegister register = new ClickRegister();
+		submit_register.addActionListener(register);
+		ClickRecovery recovery = new ClickRecovery();
+		submit_recovery.addActionListener(recovery);
 		
 		Container ct = getContentPane();
 		ct.add(painel);
@@ -81,7 +78,7 @@ public class Index extends JFrame {
 		}
 		
 	}
-	class ClickCreate implements ActionListener{
+	class ClickRegister implements ActionListener{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -93,9 +90,9 @@ public class Index extends JFrame {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			CreateUser createUser = new CreateUser();
-			createUser.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			createUser.setVisible(true);
+			Register register = new Register();
+			register.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			register.setVisible(true);
 		}
 		
 	}
@@ -111,9 +108,9 @@ public class Index extends JFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		PasswordRecovery recovery = new PasswordRecovery();
-		recovery.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		recovery.setVisible(true);
+		CheckEmail checkEmail = new CheckEmail();
+		checkEmail.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		checkEmail.setVisible(true);
 	}
 	
 }
