@@ -44,7 +44,7 @@ public class CheckEmail extends JFrame{
 		submit_check = new JButton("Check Email");
 		painel.add(submit_check, new GBC(1,3,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0, 20, 10, 20).setFill(GBC.BOTH));
 		
-		submit_back = new JButton("Back");
+		submit_back = new JButton("Cancel");
 		painel.add(submit_back, new GBC(1,4,1,1).setWeight(1, 0.2).setAnchor(GBC.CENTER).setInsets(0, 25, 15, 35).setFill(GBC.BOTH));
 		
 		ClickCheck check = new ClickCheck();

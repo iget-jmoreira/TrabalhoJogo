@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class Recovery extends JFrame {
+public class PasswordRecovery extends JFrame {
 	/**
 	 * 
 	 */
@@ -24,10 +24,10 @@ public class Recovery extends JFrame {
 	JLabel question, answer, pass1, pass2;
 	JTextField input_question, input_answer;
 	JPasswordField input_pass1, input_pass2;
-	JButton submit_recovery, submit_back;
+	JButton submit_recovery, submit_cancel;
 	String db_answ = null, username = null;
 	
-	public Recovery(String user, String quest, String ans){
+	public PasswordRecovery(String user, String quest, String ans){
 		db_answ = ans;
 		username = user;
 		setTitle("Recovery Password");
@@ -59,18 +59,18 @@ public class Recovery extends JFrame {
 		input_pass2 = new JPasswordField();
 		painel.add(input_pass2, new GBC(1,8,1,1).setWeight(2, 0.5).setAnchor(GBC.NORTHWEST).setInsets(5, 25, 35, 25).setFill(GBC.BOTH));
 		
-		submit_recovery = new JButton("Salvar");
+		submit_recovery = new JButton("Confirm");
 		painel.add(submit_recovery, new GBC(1,9,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0, 20, 10, 20).setFill(GBC.BOTH));
 		
-		submit_back = new JButton("Voltar");
-		painel.add(submit_back, new GBC(1,10,1,1).setWeight(1, 0.2).setAnchor(GBC.CENTER).setInsets(0, 35, 15, 35).setFill(GBC.BOTH));
+		submit_cancel = new JButton("Cancel");
+		painel.add(submit_cancel, new GBC(1,10,1,1).setWeight(1, 0.2).setAnchor(GBC.CENTER).setInsets(0, 35, 15, 35).setFill(GBC.BOTH));
 		
 		
 		ClickRecovery recovery = new ClickRecovery();
 		submit_recovery.addActionListener(recovery);
 		
 		ClickBack back = new ClickBack();
-		submit_back.addActionListener(back);
+		submit_cancel.addActionListener(back);
 		
 		Container ct = getContentPane();
 		ct.add(painel);
@@ -82,15 +82,17 @@ public class Recovery extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			String db_answer, input_answer, pass1, pass2;
-			db_answer = Recovery.this.db_answ;
-			input_answer = Recovery.this.input_answer.getText();
-			pass1 = String.valueOf(Recovery.this.input_pass1.getPassword());
-			pass2 = String.valueOf(Recovery.this.input_pass2.getPassword());
+			db_answer = PasswordRecovery.this.db_answ;
+			input_answer = PasswordRecovery.this.input_answer.getText();
+			pass1 = String.valueOf(PasswordRecovery.this.input_pass1.getPassword());
+			pass2 = String.valueOf(PasswordRecovery.this.input_pass2.getPassword());
+			Connect conn = new Connect();
+			conn.recovery(pass1, password);
 			if(input_answer.equals(db_answer) && pass1.equals(pass2)){
 				Connect conn = new Connect();
-				boolean ret = conn.recovery(Recovery.this.username, String.valueOf(Recovery.this.input_pass1.getPassword()));
+				boolean ret = conn.recovery(PasswordRecovery.this.username, String.valueOf(PasswordRecovery.this.input_pass1.getPassword()));
 				if(ret){
-					Recovery.this.setVisible(false);
+					PasswordRecovery.this.setVisible(false);
 				}
 			} else{
 				JOptionPane.showMessageDialog(null, "Answer or Passwords are incorrect.", "Error!", JOptionPane.ERROR_MESSAGE);
@@ -104,7 +106,7 @@ public class Recovery extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			Recovery.this.setVisible(false);
+			PasswordRecovery.this.setVisible(false);
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e1) {

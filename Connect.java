@@ -42,7 +42,7 @@ public class Connect {
 		return returned;
 	}
 	
-	public boolean cadastra(String username, String pass1, String pass2, String email, String question, String answer){
+	public boolean saveRegister(String username, String pass1, String pass2, String email, String question, String answer){
 		Statement stmt;
 		ResultSet rs;
 		boolean returned = false;
@@ -100,7 +100,7 @@ public class Connect {
 			rs = stmt.executeQuery("SELECT * FROM `users` WHERE email='"+email+"'");
 			if(rs.next()){
 				returned = true;
-				Recovery recov = new Recovery(rs.getString("username"), rs.getString("question"), rs.getString("answer"));
+				PasswordRecovery recov = new PasswordRecovery(rs.getString("username"), rs.getString("question"), rs.getString("answer"));
 				recov.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				recov.setVisible(true);
 			} else{

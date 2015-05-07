@@ -23,7 +23,7 @@ public class Register extends JFrame {
 	JLabel username, pass1, pass2, email, question, answer;
 	JTextField input_username, input_email, input_question, input_answer;
 	JPasswordField input_pass1, input_pass2;
-	JButton submit_register, submit_back;
+	JButton submit_register, submit_cancel;
 	
 	public Register(){
 		setTitle("Create New User");
@@ -64,18 +64,18 @@ public class Register extends JFrame {
 		input_answer = new JTextField();
 		painel.add(input_answer, new GBC(1,12,1,1).setWeight(2, 0.5).setAnchor(GBC.NORTHWEST).setInsets(0, 25, 20, 25).setFill(GBC.BOTH));
 		
-		submit_register = new JButton("Salvar");
+		submit_register = new JButton("Save Register");
 		painel.add(submit_register, new GBC(1,13,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0, 20, 10, 20).setFill(GBC.BOTH));
 		
-		submit_back = new JButton("Voltar");
-		painel.add(submit_back, new GBC(1,14,1,1).setWeight(1, 0.2).setAnchor(GBC.CENTER).setInsets(0, 35, 15, 35).setFill(GBC.BOTH));
+		submit_cancel = new JButton("Cancel");
+		painel.add(submit_cancel, new GBC(1,14,1,1).setWeight(1, 0.2).setAnchor(GBC.CENTER).setInsets(0, 35, 15, 35).setFill(GBC.BOTH));
 		
 		
 		ClickCreate create = new ClickCreate();
 		submit_register.addActionListener(create);
 		
-		ClickBack back = new ClickBack();
-		submit_back.addActionListener(back);
+		ClickCancel cancel = new ClickCancel();
+		submit_cancel.addActionListener(cancel);
 		
 		Container ct = getContentPane();
 		ct.add(painel);
@@ -94,7 +94,7 @@ public class Register extends JFrame {
 			String answer = String.valueOf(Register.this.input_answer.getText());
 			
 			Connect conn = new Connect();
-			boolean returned = conn.cadastra(username, pass1, pass2, email, question, answer);
+			boolean returned = conn.saveRegister(username, pass1, pass2, email, question, answer);
 			if(returned == true){
 				Register.this.setVisible(false);
 			}
@@ -103,7 +103,7 @@ public class Register extends JFrame {
 		
 	}
 	
-	class ClickBack implements ActionListener{
+	class ClickCancel implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
