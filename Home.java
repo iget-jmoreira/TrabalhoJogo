@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class Inicio extends JFrame{
+public class Home extends JFrame{
 
 	/**
 	 * 
@@ -21,7 +21,7 @@ public class Inicio extends JFrame{
 	JPanel painel = new JPanel();
 	JButton submit_play, submit_records, submit_quit;
 	
-	public Inicio(String username, String password){
+	public Home(String username, String password){
 	setTitle("Login");
 	GridBagLayout layout = new GridBagLayout();
 	painel.setLayout(layout);
@@ -68,7 +68,7 @@ public class Inicio extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			Inicio.this.setVisible(false);
+			Home.this.setVisible(false);
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
@@ -87,7 +87,7 @@ public class Inicio extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			Inicio.this.setVisible(false);
+			Home.this.setVisible(false);
 			JOptionPane.showMessageDialog(null, "See You... bye bye.", "Bye Bye", JOptionPane.ERROR_MESSAGE);
 			try {
 				Thread.sleep(200);

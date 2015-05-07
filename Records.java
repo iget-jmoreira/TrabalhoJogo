@@ -81,7 +81,7 @@ public class Records extends JFrame{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			Inicio ini= new Inicio("tinho744", "senha123");
+			Home ini= new Home("tinho744", "senha123");
 			ini.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			ini.setVisible(true);
 		}
