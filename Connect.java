@@ -25,7 +25,7 @@ public class Connect {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("SELECT * FROM `users` WHERE username='"+username+"' AND password='"+pass+"'");
 			if(rs.next()){
-				Home init = new Home(username, password);
+				Home init = new Home(username);
 				init.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				init.setVisible(true);
 				returned = true;
@@ -63,7 +63,7 @@ public class Connect {
 						stmt.close();
 						stmt = conn.createStatement();
 						stmt.executeUpdate("INSERT INTO users (username, password, email, question, answer) VALUES ('"+username+"','"+pass1+"','"+email+"', '"+question+"', '"+answer+"')");
-						Home init = new Home(username, pass1);
+						Home init = new Home(username);
 						init.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 						init.setVisible(true);
 						returned = true;
@@ -133,7 +133,7 @@ public class Connect {
 				{
 					returned = true;
 					JOptionPane.showMessageDialog(null, "Password Changed!", "Message!", JOptionPane.ERROR_MESSAGE);
-					Home home = new Home();
+					Home home = new Home(username);
 					home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					home.setVisible(true);
 				}

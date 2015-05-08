@@ -21,8 +21,8 @@ public class Home extends JFrame{
 	JPanel painel = new JPanel();
 	JButton submit_play, submit_records, submit_quit;
 	
-	public Home(String username, String password){
-	setTitle("Login");
+	public Home(String username){
+	setTitle(username);
 	GridBagLayout layout = new GridBagLayout();
 	painel.setLayout(layout);
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -42,7 +42,7 @@ public class Home extends JFrame{
 	ClickPlay play = new ClickPlay();
 	submit_play.addActionListener(play);
 	
-	ClickRecords records = new ClickRecords();
+	ClickRecords records = new ClickRecords(username);
 	submit_records.addActionListener(records);
 	
 	ClickQuit quit = new ClickQuit();
@@ -64,6 +64,11 @@ public class Home extends JFrame{
 	}
 	
 	class ClickRecords implements ActionListener{
+		private String username;
+		
+		public ClickRecords(String username){
+			this.username = username;
+		}
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -75,7 +80,7 @@ public class Home extends JFrame{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			Records rec = new Records();
+			Records rec = new Records(this.username);
 			rec.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			rec.setVisible(true);
 		}
