@@ -197,10 +197,8 @@ public class Connect {
 			while(rs.next())
 			{//CONTINUAR DAQUI
 				records[i][0] = rs.getString("username");
-				records[i][1] = rs.getBigDecimal(3);
-//				records[i][2] = rs.getString("data");
-//				records[i][1] = "campo 2";
-				records[i][2] = "campo 3";
+				records[i][1] = rs.getString("score");
+				records[i][2] = rs.getString("date");
 				i++;
 			}
 			

@@ -38,20 +38,24 @@ public class Records extends JFrame{
 		String[][] records = c.getRecords();
 
 		DefaultTableModel modelo = new DefaultTableModel(records, columns);
-		modelo.setValueAt("Username", 0, 0);
-		modelo.setValueAt("Score", 0, 1);
-		modelo.setValueAt("Date", 0, 2);
+		modelo.setValueAt(this.turnBold("Username"), 0, 0);
+		modelo.setValueAt(this.turnBold("Score"), 0, 1);
+		modelo.setValueAt(this.turnBold("Date"), 0, 2);
 		JTable table = new JTable(modelo);
 		painel.add(table, new GBC(1,1,1,1).setWeight(1, 1).setAnchor(GBC.CENTER).setFill(GBC.BOTH).setInsets(10, 40, 10, 40));
 		
 		submit_back = new JButton("Voltar");
-		painel.add(submit_back, new GBC(1,2,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0, 10, 15, 10).setFill(GBC.BOTH));
+		painel.add(submit_back, new GBC(1,2,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0, 10, 15, 10).setFill(GBC.CENTER));
 		
 		ClickBack back = new ClickBack(username);
 		submit_back.addActionListener(back);
 		
 		Container ct = getContentPane();
 		ct.add(painel);
+	}
+	
+	public String turnBold(String word){
+		return "<html><b>"+word+"</b></html>";
 	}
 	
 	class ClickBack implements ActionListener{
