@@ -25,7 +25,7 @@ public class Connect {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("SELECT * FROM `users` WHERE username='"+username+"' AND password='"+pass+"'");
 			if(rs.next()){
-				Inicio init = new Inicio(username, password);
+				Home init = new Home(username);
 				init.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				init.setVisible(true);
 				returned = true;
@@ -63,7 +63,7 @@ public class Connect {
 						stmt.close();
 						stmt = conn.createStatement();
 						stmt.executeUpdate("INSERT INTO users (username, password, email, question, answer) VALUES ('"+username+"','"+pass1+"','"+email+"', '"+question+"', '"+answer+"')");
-						Inicio init = new Inicio(username, pass1);
+						Home init = new Home(username);
 						init.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 						init.setVisible(true);
 						returned = true;
@@ -100,7 +100,7 @@ public class Connect {
 			rs = stmt.executeQuery("SELECT * FROM `users` WHERE email='"+email+"'");
 			if(rs.next()){
 				returned = true;
-				PasswordRecovery recov = new PasswordRecovery(rs.getString("username"), rs.getString("question"), rs.getString("answer"));
+				PasswordRecovery recov = new PasswordRecovery(rs.getString("username"), rs.getString("question"));
 				recov.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				recov.setVisible(true);
 			} else{
@@ -119,26 +119,31 @@ public class Connect {
 		return returned;
 	}
 	
-	public boolean recovery(String username, String password){
+	public boolean recovery(String username, String answer, String pass1, String pass2){
 		Statement stmt;
+		ResultSet rs;
 		boolean returned = false;
-		try{
-			Class.forName(this.driver);
-			conn = DriverManager.getConnection(this.server, this.user, this.password);
-			stmt = conn.createStatement();
-			stmt.executeUpdate("UPDATE users SET password='"+password+"' WHERE username='"+username+"'");
-			returned = true;
-			JOptionPane.showMessageDialog(null, "Password Changed!", "Message!", JOptionPane.ERROR_MESSAGE);
-			Index index = new Index();
-			index.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			index.setVisible(true);
-			
-		} catch(ClassNotFoundException e){
-			System.out.println("Erro no Driver "+e.getMessage());
-			e.printStackTrace();
-		} catch(SQLException e){
-			System.out.println("Erro do BD "+e.getMessage());
-			e.printStackTrace();
+		if(pass1.equals(pass2)){
+			try{
+				Class.forName(this.driver);
+				conn = DriverManager.getConnection(this.server, this.user, this.password);
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery("SELECT * FROM `users` WHERE username='"+username+"' AND answer='"+answer+"'");
+				if(rs.next())
+				{
+					returned = true;
+					JOptionPane.showMessageDialog(null, "Password Changed!", "Message!", JOptionPane.ERROR_MESSAGE);
+					Home home = new Home(username);
+					home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					home.setVisible(true);
+				}
+			} catch(ClassNotFoundException e){
+				System.out.println("Erro no Driver "+e.getMessage());
+				e.printStackTrace();
+			} catch(SQLException e){
+				System.out.println("Erro do BD "+e.getMessage());
+				e.printStackTrace();
+			}
 		}
 		return returned;
 	}

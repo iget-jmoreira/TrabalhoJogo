@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -27,8 +26,7 @@ public class PasswordRecovery extends JFrame {
 	JButton submit_recovery, submit_cancel;
 	String db_answ = null, username = null;
 	
-	public PasswordRecovery(String user, String quest, String ans){
-		db_answ = ans;
+	public PasswordRecovery(String user, String quest){
 		username = user;
 		setTitle("Recovery Password");
 		GridBagLayout layout = new GridBagLayout();
@@ -81,21 +79,15 @@ public class PasswordRecovery extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			String db_answer, input_answer, pass1, pass2;
-			db_answer = PasswordRecovery.this.db_answ;
+			String input_answer, pass1, pass2, username;
+			username = PasswordRecovery.this.username;
 			input_answer = PasswordRecovery.this.input_answer.getText();
 			pass1 = String.valueOf(PasswordRecovery.this.input_pass1.getPassword());
 			pass2 = String.valueOf(PasswordRecovery.this.input_pass2.getPassword());
 			Connect conn = new Connect();
-			conn.recovery(pass1, password);
-			if(input_answer.equals(db_answer) && pass1.equals(pass2)){
-				Connect conn = new Connect();
-				boolean ret = conn.recovery(PasswordRecovery.this.username, String.valueOf(PasswordRecovery.this.input_pass1.getPassword()));
-				if(ret){
-					PasswordRecovery.this.setVisible(false);
-				}
-			} else{
-				JOptionPane.showMessageDialog(null, "Answer or Passwords are incorrect.", "Error!", JOptionPane.ERROR_MESSAGE);
+			boolean returned = conn.recovery(username, input_answer, pass1, pass2);
+			if(returned){
+				PasswordRecovery.this.setVisible(false);
 			}
 		}
 		
