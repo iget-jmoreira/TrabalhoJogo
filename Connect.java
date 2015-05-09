@@ -184,21 +184,24 @@ public class Connect {
 		}
 	}
 	
-	public String[] getUsersRecord(){
+	public String[][] getRecords(){
 		ResultSet rs;
 		Statement stmt;
-		String users[] = new String[11];
+		String records[][] = new String[11][3];
 		try{
 			Class.forName(this.driver);
 			conn = DriverManager.getConnection(this.server, this.user, this.password);
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("SELECT * FROM records ORDER BY score DESC");
-			int loop = 1;
-			
-			while((rs.next()) && (loop <= 10)){
-				users[loop] = rs.getString("username");
-				loop++;
+			int i = 1;
+			while(rs.next())
+			{//CONTINUAR DAQUI
+				records[i][0] = rs.getString("username");
+				records[i][1] = rs.getString("score");
+				records[i][2] = rs.getString("date");
+				i++;
 			}
+			
 		} catch(ClassNotFoundException e){
 			System.out.println("Erro no Driver "+e.getMessage());
 			e.printStackTrace();
@@ -206,57 +209,7 @@ public class Connect {
 			System.out.println("Erro do BD "+e.getMessage());
 			e.printStackTrace();
 		}
-		return users;
-	}
-	
-	public Integer[] getScoresRecord(){
-		ResultSet rs;
-		Statement stmt;
-		Integer scores[] = new Integer[11];
-		try{
-			Class.forName(this.driver);
-			conn = DriverManager.getConnection(this.server, this.user, this.password);
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT * FROM records ORDER BY score DESC");
-			int loop = 1;
-			
-			while((rs.next()) && (loop <= 10)){
-				scores[loop] = rs.getInt("score");
-				loop++;
-			}
-		} catch(ClassNotFoundException e){
-			System.out.println("Erro no Driver "+e.getMessage());
-			e.printStackTrace();
-		} catch(SQLException e){
-			System.out.println("Erro do BD "+e.getMessage());
-			e.printStackTrace();
-		}
-		return scores;
-	}
-	
-	public String[] getDatasRecord(){
-		ResultSet rs;
-		Statement stmt;
-		String datas[] = new String[11];
-		try{
-			Class.forName(this.driver);
-			conn = DriverManager.getConnection(this.server, this.user, this.password);
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT * FROM records ORDER BY score DESC");
-			int loop = 1;
-			
-			while((rs.next()) && (loop <= 10)){
-				datas[loop] = rs.getString("date");
-				loop++;
-			}
-		} catch(ClassNotFoundException e){
-			System.out.println("Erro no Driver "+e.getMessage());
-			e.printStackTrace();
-		} catch(SQLException e){
-			System.out.println("Erro do BD "+e.getMessage());
-			e.printStackTrace();
-		}
-		return datas;
+		return records;
 	}
 	
 	public void teste(){

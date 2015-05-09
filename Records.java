@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 
 public class Records extends JFrame{
@@ -21,7 +23,7 @@ public class Records extends JFrame{
 	JPanel painel = new JPanel();
 	JLabel freeSpace, user, score, data;
 	JButton submit_back;
-
+	
 	public Records(String username){
 		setTitle("Records");
 		GridBagLayout layout = new GridBagLayout();
@@ -31,43 +33,29 @@ public class Records extends JFrame{
 		double height = (screenSize.getHeight() / 2) - 300;
 		setBounds((int) width, (int) height, 600, 600);
 		
-		user = new JLabel("Username");
-		painel.add(user, new GBC(1,1,1,1).setWeight(1, 1).setAnchor(GBC.EAST).setInsets(0, 10, 0, 0));
-		score = new JLabel("Score");
-		painel.add(score, new GBC(2,1,1,1).setWeight(1, 1).setAnchor(GBC.CENTER).setInsets(0, 10, 0, 0));
-		data = new JLabel("Date");
-		painel.add(data, new GBC(3,1,1,1).setWeight(1, 1).setAnchor(GBC.WEST).setInsets(0, 10, 0, 0));
-		
+		String columns[] = {"username", "score", "date"};
 		Connect c = new Connect();
-		String users[] = c.getUsersRecord();
-		String datas[] = c.getDatasRecord();
-		Integer[] scores = c.getScoresRecord();
-		for(int i = 1; i<=10; i++){
-			if((users[i] != null)){
-				user = new JLabel(users[i]);
-				painel.add(user, new GBC(1,1+i,1,1).setWeight(1, 1).setAnchor(GBC.EAST).setInsets(0, 0, 0, 0));
-				score = new JLabel(scores[i] + "");
-				painel.add(score, new GBC(2,1+i,1,1).setWeight(1, 1).setAnchor(GBC.CENTER).setInsets(0, 0, 0, 0));
-				data = new JLabel(datas[1]);
-				painel.add(data, new GBC(3,1+i,1,1).setWeight(1, 1).setAnchor(GBC.WEST).setInsets(0, 0, 0, 0));
-			} else{
-				user = new JLabel("");
-				painel.add(user, new GBC(1,1+i,1,1).setWeight(1, 1).setAnchor(GBC.EAST).setInsets(0, 0, 0, 0));
-				score = new JLabel("");
-				painel.add(score, new GBC(2,1+i,1,1).setWeight(1, 1).setAnchor(GBC.CENTER).setInsets(0, 0, 0, 0));
-				data = new JLabel("");
-				painel.add(data, new GBC(3,1+i,1,1).setWeight(1, 1).setAnchor(GBC.WEST).setInsets(0, 20, 0, 20));
-			}
-		}
+		String[][] records = c.getRecords();
+
+		DefaultTableModel modelo = new DefaultTableModel(records, columns);
+		modelo.setValueAt(this.turnBold("Username"), 0, 0);
+		modelo.setValueAt(this.turnBold("Score"), 0, 1);
+		modelo.setValueAt(this.turnBold("Date"), 0, 2);
+		JTable table = new JTable(modelo);
+		painel.add(table, new GBC(1,1,1,1).setWeight(1, 1).setAnchor(GBC.CENTER).setFill(GBC.BOTH).setInsets(10, 40, 10, 40));
 		
 		submit_back = new JButton("Voltar");
-		painel.add(submit_back, new GBC(2,12,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0, 10, 15, 10).setFill(GBC.BOTH));
+		painel.add(submit_back, new GBC(1,2,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0, 10, 15, 10).setFill(GBC.CENTER));
 		
 		ClickBack back = new ClickBack(username);
 		submit_back.addActionListener(back);
 		
 		Container ct = getContentPane();
 		ct.add(painel);
+	}
+	
+	public String turnBold(String word){
+		return "<html><b>"+word+"</b></html>";
 	}
 	
 	class ClickBack implements ActionListener{
