@@ -39,7 +39,7 @@ public class Home extends JFrame{
 	submit_quit = new JButton("Quit Game");
 	painel.add(submit_quit, new GBC(1,3,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0,10,15,10).setFill(GBC.BOTH));
 	
-	ClickPlay play = new ClickPlay();
+	ClickPlay play = new ClickPlay(username);
 	submit_play.addActionListener(play);
 	
 	ClickRecords records = new ClickRecords(username);
@@ -54,11 +54,24 @@ public class Home extends JFrame{
 	}
 	
 	class ClickPlay implements ActionListener{
-
+		private String username;
+		
+		public ClickPlay(String username){
+			this.username = username;
+		}
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			
+			Home.this.setVisible(false);
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Game game = new Game(this.username);
+			game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			game.setVisible(true);
 		}
 		
 	}
