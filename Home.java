@@ -31,13 +31,13 @@ public class Home extends JFrame{
 	setBounds((int) width, (int) height, 400, 300);
 	
 	submit_play = new JButton("Play Game");
-	painel.add(submit_play, new GBC(1,1,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0, 10, 15, 10).setFill(GBC.BOTH));
+	painel.add(submit_play, new GBC(1,1,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(40, 50, 15, 50).setFill(GBC.BOTH));
 	
 	submit_records = new JButton("Records");
-	painel.add(submit_records, new GBC(1,2,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0,10,15,10).setFill(GBC.BOTH));
+	painel.add(submit_records, new GBC(1,2,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0,50,15,50).setFill(GBC.BOTH));
 	
 	submit_quit = new JButton("Quit Game");
-	painel.add(submit_quit, new GBC(1,3,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0,10,15,10).setFill(GBC.BOTH));
+	painel.add(submit_quit, new GBC(1,3,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0,50,40,50).setFill(GBC.BOTH));
 	
 	ClickPlay play = new ClickPlay(username);
 	submit_play.addActionListener(play);

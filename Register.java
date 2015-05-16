@@ -1,17 +1,19 @@
 package TrabalhoJogo;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.JToolBar;
 
 
 public class Register extends JFrame {
@@ -23,62 +25,170 @@ public class Register extends JFrame {
 	JLabel username, pass1, pass2, email, question, answer;
 	JTextField input_username, input_email, input_question, input_answer;
 	JPasswordField input_pass1, input_pass2;
-	JButton submit_register, submit_cancel;
+	JButton submit_register;
+	JToolBar toolbar;
 	
 	public Register(){
 		setTitle("Create New User");
-		GridBagLayout layout = new GridBagLayout();
-		painel.setLayout(layout);
+		painel.setLayout(null);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double width = (screenSize.getWidth() / 2) - 200;
-		double height = (screenSize.getHeight() / 2) - 300;
-		setBounds((int) width, (int) height, 400, 600);
+		setBounds((int) width, 100, 400, 530);
+		
+		Action goIndex = new GoIndexAction("Index");
+		Action goRegister = new GoRegisterAction("Register");
+		Action goCheckEmail = new GoCheckEmailAction("Recovery");
+		Action goInstructions = new GoInstructionsAction("Instructions");
+		
+		toolbar = new JToolBar();
+		toolbar.add(new JButton(goIndex));
+		toolbar.add(new JButton(goRegister));
+		toolbar.add(new JButton(goCheckEmail));
+		toolbar.add(new JButton(goInstructions));
+		toolbar.setBounds(0, 0, 400, 30);
+		painel.add(toolbar);
 		
 		username = new JLabel("Username");
-		painel.add(username, new GBC(1,1,1,1).setWeight(1, 1).setAnchor(GBC.WEST).setInsets(10, 40, 0, 0));
+		username.setBounds(40, 50, 360, 25);
+		painel.add(username);
 		input_username = new JTextField(18);
-		painel.add(input_username, new GBC(1,2,1,1).setWeight(2, 0.5).setAnchor(GBC.NORTHWEST).setInsets(0, 25, 0, 100).setFill(GBC.BOTH));
+		input_username.setBounds(40, 75, 260, 25);
+		painel.add(input_username);
 		
 		pass1 = new JLabel("Password");
-		painel.add(pass1, new GBC(1,3,1,1).setWeight(1, 1).setAnchor(GBC.WEST).setInsets(0, 40, 0, 0));
+		pass1.setBounds(40, 110, 260, 25);
+		painel.add(pass1);
 		input_pass1 = new JPasswordField(15);
-		painel.add(input_pass1, new GBC(1,4,1,1).setWeight(2, 0.5).setAnchor(GBC.NORTHWEST).setInsets(0, 25, 0, 150).setFill(GBC.BOTH));
+		input_pass1.setBounds(40, 135, 260, 25);
+		painel.add(input_pass1);
 
 		pass2 = new JLabel("* Password");
-		painel.add(pass2, new GBC(1,5,1,1).setWeight(1, 1).setAnchor(GBC.WEST).setInsets(0, 40, 0, 0));
+		pass2.setBounds(40, 170, 260, 25);
+		painel.add(pass2);
 		input_pass2 = new JPasswordField(15);
-		painel.add(input_pass2, new GBC(1,6,1,1).setWeight(2, 0.5).setAnchor(GBC.NORTHWEST).setInsets(0, 25, 0, 150).setFill(GBC.BOTH));
+		input_pass2.setBounds(40, 195, 260, 25);
+		painel.add(input_pass2);
 
 		email = new JLabel("Email");
-		painel.add(email, new GBC(1,7,1,1).setWeight(1, 1).setAnchor(GBC.WEST).setInsets(0, 40, 0, 0));
+		email.setBounds(40, 230, 260, 25);
+		painel.add(email);
 		input_email = new JTextField();
-		painel.add(input_email, new GBC(1,8,1,1).setWeight(2, 0.5).setAnchor(GBC.NORTHWEST).setInsets(0, 25, 0, 25).setFill(GBC.BOTH));
+		input_email.setBounds(40, 255, 260, 25);
+		painel.add(input_email);
 		
 		question = new JLabel("Secret Question");
-		painel.add(question, new GBC(1,9,1,1).setWeight(1, 1).setAnchor(GBC.WEST).setInsets(0, 40, 0, 0));
+		question.setBounds(40, 290, 260, 25);
+		painel.add(question);
 		input_question = new JTextField();
-		painel.add(input_question, new GBC(1,10,1,1).setWeight(2, 0.5).setAnchor(GBC.NORTHWEST).setInsets(0, 25, 0, 25).setFill(GBC.BOTH));
+		input_question.setBounds(40, 315, 260, 25);
+		painel.add(input_question);
 		
 		answer = new JLabel("Answer");
-		painel.add(answer, new GBC(1,11,1,1).setWeight(1, 1).setAnchor(GBC.WEST).setInsets(0, 40, 0, 0));
+		answer.setBounds(40, 350, 260, 25);
+		painel.add(answer);
 		input_answer = new JTextField();
-		painel.add(input_answer, new GBC(1,12,1,1).setWeight(2, 0.5).setAnchor(GBC.NORTHWEST).setInsets(0, 25, 20, 25).setFill(GBC.BOTH));
+		input_answer.setBounds(40, 375, 260, 25);
+		painel.add(input_answer);
 		
 		submit_register = new JButton("Save Register");
-		painel.add(submit_register, new GBC(1,13,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0, 20, 10, 20).setFill(GBC.BOTH));
-		
-		submit_cancel = new JButton("Cancel");
-		painel.add(submit_cancel, new GBC(1,14,1,1).setWeight(1, 0.2).setAnchor(GBC.CENTER).setInsets(0, 35, 15, 35).setFill(GBC.BOTH));
-		
+		submit_register.setBounds(90, 425, 200, 30);
+		painel.add(submit_register);
 		
 		ClickCreate create = new ClickCreate();
 		submit_register.addActionListener(create);
 		
-		ClickCancel cancel = new ClickCancel();
-		submit_cancel.addActionListener(cancel);
-		
 		Container ct = getContentPane();
 		ct.add(painel);
+	}
+	
+	class GoIndexAction extends AbstractAction{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		
+		public GoIndexAction(String nome){
+			super(nome);
+			this.putValue(SHORT_DESCRIPTION, nome);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			Register.this.setVisible(false);
+			Index i = new Index();
+			i.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			i.setVisible(true);
+		}
+		
+	}
+	
+	class GoRegisterAction extends AbstractAction{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public GoRegisterAction(String nome){
+			super(nome);
+			this.putValue(SHORT_DESCRIPTION, nome);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			Register.this.setVisible(false);
+			Register r = new Register();
+			r.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			r.setVisible(true);
+		}
+		
+	}
+	
+	class GoCheckEmailAction extends AbstractAction{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public GoCheckEmailAction(String nome){
+			super(nome);
+			this.putValue(SHORT_DESCRIPTION, nome);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			Register.this.setVisible(false);
+			CheckEmail c = new CheckEmail();
+			c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			c.setVisible(true);
+		}
+	}
+	
+	class GoInstructionsAction extends AbstractAction{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public GoInstructionsAction(String nome){
+			super(nome);
+			this.putValue(SHORT_DESCRIPTION, nome);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			Register.this.setVisible(false);
+			Instructions c = new Instructions();
+			c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			c.setVisible(true);
+		}
 	}
 	
 	class ClickCreate implements ActionListener{
@@ -99,25 +209,6 @@ public class Register extends JFrame {
 				Register.this.setVisible(false);
 			}
 			
-		}
-		
-	}
-	
-	class ClickCancel implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			Register.this.setVisible(false);
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			Index index = new Index();
-			index.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			index.setVisible(true);
 		}
 		
 	}

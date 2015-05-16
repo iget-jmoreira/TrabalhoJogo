@@ -1,17 +1,18 @@
 package TrabalhoJogo;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.JToolBar;
 
 public class Index extends JFrame {
 
@@ -24,45 +25,145 @@ public class Index extends JFrame {
 	JLabel login, password;
 	JTextField input_login;
 	JPasswordField input_password;
-	JButton submit_login, submit_register, submit_recovery;
+	JButton submit_login;
+	JToolBar toolbar;
 	
 	public Index(){
 		setTitle("Login");
-		GridBagLayout layout = new GridBagLayout();
-		painel.setLayout(layout);
+		painel.setLayout(null);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double width = (screenSize.getWidth() / 2) - 200;
-		double height = (screenSize.getHeight() / 2) - 190;
-		setBounds((int) width, (int) height, 400, 380);
+		setBounds((int) width, 100, 400, 380);
+		
+		Action goIndex = new GoIndexAction("Index");
+		Action goRegister = new GoRegisterAction("Register");
+		Action goCheckEmail = new GoCheckEmailAction("Recovery");
+		Action goInstructions = new GoInstructionsAction("Instructions");
+		
+		toolbar = new JToolBar();
+		toolbar.add(new JButton(goIndex));
+		toolbar.add(new JButton(goRegister));
+		toolbar.add(new JButton(goCheckEmail));
+		toolbar.add(new JButton(goInstructions));
+		toolbar.setBounds(0, 0, 400, 30);
+		painel.add(toolbar);
 		
 		login = new JLabel("Login");
-		painel.add(login, new GBC(1,1,1,1).setWeight(1, 1).setAnchor(GBC.WEST).setInsets(10, 40, 3, 0).setFill(GBC.BOTH));
+		login.setBounds(50, 80, 340, 25);
+		painel.add(login);
 		input_login = new JTextField(12);
-		painel.add(input_login, new GBC(1,2,1,1).setWeight(2,0.5).setAnchor(GBC.NORTHWEST).setInsets(0, 25, 15, 100).setFill(GBC.BOTH));
+		input_login.setBounds(50, 105, 260, 30);
+		painel.add(input_login);
 		
 		password = new JLabel("Password");
-		painel.add(password, new GBC(1,3,1,1).setWeight(1, 1).setAnchor(GBC.WEST).setInsets(0, 40, 3, 0).setFill(GBC.BOTH));
+		password.setBounds(50, 140, 340, 25);
+		painel.add(password);
 		input_password = new JPasswordField(12);
-		painel.add(input_password, new GBC(1,4,1,1).setWeight(2, 0.5).setAnchor(GBC.NORTHWEST).setInsets(0, 25, 40, 140).setFill(GBC.BOTH));
+		input_password.setBounds(50, 175, 260, 30);
+		painel.add(input_password);
 		
 		submit_login = new JButton("Login");
-		painel.add(submit_login, new GBC(1,5,1,1).setWeight(1, 0.3).setAnchor(GBC.NORTH).setInsets(0, 20, 10, 20).setFill(GBC.BOTH));
-		submit_register = new JButton("Create Register");
-		painel.add(submit_register, new GBC(1,6,1,1).setWeight(1, 0.2).setAnchor(GBC.NORTH).setInsets(0, 35, 10, 35).setFill(GBC.BOTH));
-		submit_recovery = new JButton("Password Recovery");
-		painel.add(submit_recovery, new GBC(1,7,1,1).setWeight(1, 0.2).setAnchor(GBC.NORTH).setInsets(0, 50, 15, 50).setFill(GBC.BOTH));
+		submit_login.setBounds(90, 240, 200, 30);
+		painel.add(submit_login);
 		
 		ClickLogin login = new ClickLogin();
 		submit_login.addActionListener(login);
-		ClickRegister register = new ClickRegister();
-		submit_register.addActionListener(register);
-		ClickRecovery recovery = new ClickRecovery();
-		submit_recovery.addActionListener(recovery);
 		
 		Container ct = getContentPane();
 		ct.add(painel);
 		
 	}
+	
+	class GoIndexAction extends AbstractAction{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		
+		public GoIndexAction(String nome){
+			super(nome);
+			this.putValue(SHORT_DESCRIPTION, nome);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			Index.this.setVisible(false);
+			Index i = new Index();
+			i.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			i.setVisible(true);
+		}
+		
+	}
+	
+	class GoRegisterAction extends AbstractAction{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public GoRegisterAction(String nome){
+			super(nome);
+			this.putValue(SHORT_DESCRIPTION, nome);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			Index.this.setVisible(false);
+			Register r = new Register();
+			r.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			r.setVisible(true);
+		}
+		
+	}
+	
+	class GoCheckEmailAction extends AbstractAction{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public GoCheckEmailAction(String nome){
+			super(nome);
+			this.putValue(SHORT_DESCRIPTION, nome);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			Index.this.setVisible(false);
+			CheckEmail c = new CheckEmail();
+			c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			c.setVisible(true);
+		}
+	}
+	
+	class GoInstructionsAction extends AbstractAction{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public GoInstructionsAction(String nome){
+			super(nome);
+			this.putValue(SHORT_DESCRIPTION, nome);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			Index.this.setVisible(false);
+			Instructions c = new Instructions();
+			c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			c.setVisible(true);
+		}
+	}
+	
 	
 	class ClickLogin implements ActionListener{
 		
@@ -75,44 +176,7 @@ public class Index extends JFrame {
 			if(returned == true){
 				Index.this.setVisible(false);
 			}
-		}
-		
-	}
-	class ClickRegister implements ActionListener{
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			Index.this.setVisible(false);
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			Register register = new Register();
-			register.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			register.setVisible(true);
-		}
-		
-	}
-	class ClickRecovery implements ActionListener{
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		Index.this.setVisible(false);
-		try {
-			Thread.sleep(200);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		CheckEmail checkEmail = new CheckEmail();
-		checkEmail.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		checkEmail.setVisible(true);
+		}		
 	}
 	
-}
-
 }

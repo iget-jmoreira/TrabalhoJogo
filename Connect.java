@@ -195,7 +195,7 @@ public class Connect {
 			rs = stmt.executeQuery("SELECT * FROM records ORDER BY score DESC");
 			int i = 1;
 			while(rs.next())
-			{//CONTINUAR DAQUI
+			{
 				records[i][0] = rs.getString("username");
 				records[i][1] = rs.getString("score");
 				records[i][2] = rs.getString("date");
@@ -217,7 +217,6 @@ public class Connect {
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
 			this.conn = DriverManager.getConnection(this.server, this.user, this.password);
-			System.out.println("oi");
 			
 		} catch(ClassNotFoundException e){
 			System.out.println("Erro no Driver "+e.getMessage());
