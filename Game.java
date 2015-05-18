@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.util.Random;
 
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,8 +21,11 @@ import javax.swing.JPanel;
 
 public class Game extends JFrame {
 	String pieces[][] = new String[100][3];
+	String positions[][];
 	int number = 0;
-	int movementX = 4;
+	public int movementX = 3;
+	public int movementY = 1;
+	String username;
 	/**
 	 * 
 	 */
@@ -29,9 +33,10 @@ public class Game extends JFrame {
 	JPanel painel = new JPanel();
 	JPanel gridPainel = new JPanel();
 	JLabel cube, score_title, score, level_title, level, time_title, time;
-	JButton submit_pause, submit_back;
+	JButton submit_pause, submit_back, teste;
 	
 	public Game(String username){
+		this.username = username;
 		setTitle(username);
 		painel.setLayout(null);
 		GridBagLayout layout = new GridBagLayout();
@@ -65,35 +70,36 @@ public class Game extends JFrame {
 		time.setBounds(320, 195, 300, 30);
 		painel.add(time);
 		
+		
 		Random r = new Random();
 		int randomPiece = r.nextInt(13)+1;
+		Action moveR = new MoveRAction(this.movementX);
+//		Action moveL = new MoveRAction(this.movementX);
 		GeneratePieces gen = new GeneratePieces();
-		this.drawPiece(gen.genPiece(randomPiece, this.movementX, 1));
+		System.out.println(">>>"+this.movementX);
+		this.positions = gen.genPiece(randomPiece, this.movementX, this.movementY);
+
+		
+		teste = new JButton(">");
+		teste.setBounds(320,200,70,30);
+		teste.addActionListener(moveR);
+		gridPainel.add(teste);
+		
+		Action pauseGame = new PauseAction();
+		Action goHome = new GoHomeAction(this.username);
 		
 		JMenuBar menubar = new JMenuBar();
 		JMenu menu = new JMenu("Menu");
 		menubar.add(menu);
 		JMenuItem item1 = new JMenuItem("Pause Game");
+		item1.addActionListener(pauseGame);
 		menu.add(item1);
 		JMenuItem item2 = new JMenuItem("Quit Game");
+		item2.addActionListener(goHome);
 		menu.add(item2);
 		menubar.setBounds(0, 0, 600, 30);
 		painel.add(menubar);
 		
-		
-//		Action left = new LeftAction();
-//		Action right = new RightAction();
-		
-//		InputMap imap = gridPainel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
-//        imap.put(KeyStroke.getKeyStroke("A"), "left");
-//        imap.put(KeyStroke.getKeyStroke("D"), "right");
-		
-//		ActionMap amap = gridPainel.getActionMap();
-//        amap.put("A", left);
-//        amap.put("D", right);
-//        gridPainel.setActionMap(amap);
-        
-
 		
 		// criar metodo move piece que recebe a peça desenhada e x e y
 		// esse metodo sera responsavel por mover ESSA peça
@@ -126,66 +132,96 @@ public class Game extends JFrame {
 		ct.add(painel);
 	}
 	
-	class MoveAction extends AbstractAction {
+	class MoveRAction extends AbstractAction {
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		private char sentido;
-
+		int x;
+		
+		public MoveRAction(int x){
+			this.x = x;
+		}
+		
+		@Override
 		public void actionPerformed(ActionEvent e) {
-			// move sem testar limites
-			if(this.sentido == 'D'){
-				Game.this.movementX += 1;
-			}else{
-				Game.this.movementX -= 1;
-			}
+			// TODO Auto-generated method stub
+			Game.this.movementX += 1;
+			Game.this.drawPiece(Game.this.positions);
+			Game.this.repaint();
 			repaint();
-			System.out.println(this.sentido);
+			painel.repaint();
+			gridPainel.repaint();
+			Game.this.getContentPane().repaint();
+			System.out.println(Game.this.movementX);
 		}
+		
 	}
 	
-	interface Sentido{
-		public int getPositionX();
-		public char getSentido();
+	class MoveLAction extends AbstractAction {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			Game.this.movementX += 1;
+			repaint();
+		}
+		
 	}
 	
-	class GoLeft implements Sentido{
-		public char SENTIDO = 'A';
-		public int getPositionX()
-		{
-			return -1;
+	class PauseAction extends AbstractAction {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			System.out.println("stop the game");
 		}
-		public char getSentido()
-		{
-			return SENTIDO;
-		}
+		
 	}
 	
-	class GoRight implements Sentido{
-		public char SENTIDO = 'D';
-		public int getPositionX()
-		{
-			return 1;
+	class GoHomeAction extends AbstractAction {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private String username;
+		public GoHomeAction(String username){
+			this.username = username;
 		}
-		public char getSentido()
-		{
-			return SENTIDO;
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			Game.this.setVisible(false);
+			Home h = new Home(this.username);
+			h.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			h.setVisible(true);
 		}
+		
 	}
 	
 	public void drawPiece(String[][] positions)
 	{
-		for(int a = 4; a < 7; a++)
+		for(int a = 0; a < 12; a++)
 		{
-			for(int b = 0; b < 4; b++)
+			for(int b = 0; b < 15; b++)
 			{
+//				System.out.println(positions[a][b]);
 				String val = positions[a][b];
 				if(val == "true")
 				{
-					System.out.println(val);
+//					System.out.println(val);
 					cube = new JLabel(new ImageIcon("C:\\quadradinho.png"));
 					this.gridPainel.add(cube, new GBC(a,b,1,1));
+					repaint();
 				}
 			}
 		}

@@ -7,9 +7,9 @@ public class Main {
 	public static void main(String[] args) {
 //		Index page = new Index();
 		
-		Instructions page = new Instructions();
+//		Instructions page = new Instructions();
 		
-//		Game page = new Game("tinho744");
+		Game page = new Game("tinho744");
 
 //		Records page = new Records("tinho744");
 		

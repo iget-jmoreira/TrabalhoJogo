@@ -5,9 +5,11 @@ class GeneratePieces{
 	String pieceName = null;
 	String username = null;
 	
+	//as peças nao estao funcionando em todas as posições
+	
 	public String[][] genPiece(int randomPiece, int x, int y)
 	{
-		String[][] positions = new String[9][15];
+		String[][] positions = new String[12][15];
 		if(randomPiece == 1){
 			positions[x][y] = "true";
 			positions[x+1][y] = "true";
