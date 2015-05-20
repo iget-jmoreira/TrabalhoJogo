@@ -23,7 +23,7 @@ public class Game extends JFrame {
 	String pieces[][] = new String[100][3];
 	String positions[][];
 	int number = 0;
-	public int movementX = 3;
+	public int movementX = 4;
 	public int movementY = 1;
 	String username;
 	/**
@@ -49,6 +49,7 @@ public class Game extends JFrame {
 		gridPainel.setBackground(Color.WHITE);
 		gridPainel.setLocation(20, 30);
 		
+		/// GAME STATUS //////////
 		score_title = new JLabel("<html><h3>Scores</h3></html>");
 		score_title.setBounds(300, 40, 300, 20);
 		painel.add(score_title);
@@ -69,22 +70,22 @@ public class Game extends JFrame {
 		time = new JLabel("<html><p style='font-size: 21px;'>07</p></html>");
 		time.setBounds(320, 195, 300, 30);
 		painel.add(time);
-		
+		//////////////////////////
 		
 		Random r = new Random();
 		int randomPiece = r.nextInt(13)+1;
 		Action moveR = new MoveRAction(this.movementX);
 //		Action moveL = new MoveRAction(this.movementX);
 		GeneratePieces gen = new GeneratePieces();
-		System.out.println(">>>"+this.movementX);
-		this.positions = gen.genPiece(randomPiece, this.movementX, this.movementY);
-
+		this.drawPiece(gen.genPiece(randomPiece, this.movementX, this.movementY));
 		
 		teste = new JButton(">");
-		teste.setBounds(320,200,70,30);
+		teste.setBounds(320,260,70,30);
 		teste.addActionListener(moveR);
-		gridPainel.add(teste);
+		painel.add(teste);
 		
+		
+		/// JMENU ///////////////
 		Action pauseGame = new PauseAction();
 		Action goHome = new GoHomeAction(this.username);
 		
@@ -99,33 +100,14 @@ public class Game extends JFrame {
 		menu.add(item2);
 		menubar.setBounds(0, 0, 600, 30);
 		painel.add(menubar);
+		/////////////////////////
 		
+		// criar metodo move piece que recebe a peï¿½a desenhada e x e y
+		// esse metodo sera responsavel por mover ESSA peï¿½a
+		// quando a peï¿½a atingir um Ymaximo ira parar, salvar a posiï¿½ï¿½o de cada cubinho em um array que desenhara o jogo
+		// depois sera gerada uma nova peï¿½a e o jogo continuarï¿½ normalmente
 		
-		// criar metodo move piece que recebe a peça desenhada e x e y
-		// esse metodo sera responsavel por mover ESSA peça
-		// quando a peça atingir um Ymaximo ira parar, salvar a posição de cada cubinho em um array que desenhara o jogo
-		// depois sera gerada uma nova peça e o jogo continuará normalmente
-		
-		//desenha top e bottom
-		for(int i=0;i<12;i++)
-		{
-			//topo
-			cube = new JLabel(new ImageIcon("C:\\topQuadradinho.png"));
-			gridPainel.add(cube, new GBC(i,0,1,1).setWeight(1, 1).setInsets(0, 1, 2, 1));
-			//bottom
-			cube = new JLabel(new ImageIcon("C:\\botQuadradinho.png"));
-			gridPainel.add(cube, new GBC(i,13,1,1).setInsets(0, 0, 0, 0));
-		}
-		//desenha R&L
-		for(int i=0;i<14;i++)
-		{
-			//left
-			cube = new JLabel(new ImageIcon("C:\\leftQuadradinho.png"));
-			gridPainel.add(cube, new GBC(0,i,1,1).setWeight(1, 1));
-			//right
-			cube = new JLabel(new ImageIcon("C:\\rightQuadradinho.png"));
-			gridPainel.add(cube, new GBC(11,i,1,1).setWeight(1, 1));
-		}
+		this.drawBorders();
 		
 		Container ct = getContentPane();
 		ct.add(gridPainel);
@@ -147,13 +129,7 @@ public class Game extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			Game.this.movementX += 1;
-			Game.this.drawPiece(Game.this.positions);
 			Game.this.repaint();
-			repaint();
-			painel.repaint();
-			gridPainel.repaint();
-			Game.this.getContentPane().repaint();
-			System.out.println(Game.this.movementX);
 		}
 		
 	}
@@ -219,11 +195,36 @@ public class Game extends JFrame {
 				if(val == "true")
 				{
 //					System.out.println(val);
-					cube = new JLabel(new ImageIcon("C:\\quadradinho.png"));
+					cube = new JLabel(new ImageIcon(getClass().getResource("cube.png")));
 					this.gridPainel.add(cube, new GBC(a,b,1,1));
 					repaint();
 				}
 			}
 		}
 	}
+	
+	public void drawBorders()
+	{
+		//desenha top e bottom
+		for(int i=0;i<12;i++)
+		{
+			//topo
+			cube = new JLabel(new ImageIcon(getClass().getResource("top.png")));
+			gridPainel.add(cube, new GBC(i,0,1,1).setWeight(1, 1).setInsets(0, 1, 2, 1));
+			//bottom
+			cube = new JLabel(new ImageIcon(getClass().getResource("bot.png")));
+			gridPainel.add(cube, new GBC(i,13,1,1).setWeight(1,1).setInsets(0, 1, 2, 1));
+		}
+		//desenha R&L
+		for(int i=0;i<14;i++)
+		{
+			//left
+			cube = new JLabel(new ImageIcon(getClass().getResource("left.png")));
+			gridPainel.add(cube, new GBC(0,i,1,1).setWeight(1, 1).setInsets(1, 0, 1, 0));
+			//right
+			cube = new JLabel(new ImageIcon(getClass().getResource("right.png")));
+			gridPainel.add(cube, new GBC(11,i,1,1).setWeight(1, 1).setInsets(1, 0, 1, 0));
+		}
+	}
+	
 }

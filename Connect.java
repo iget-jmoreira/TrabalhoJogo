@@ -215,9 +215,9 @@ public class Connect {
 	public void teste(){
 		
 		try{
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(this.driver);
 			this.conn = DriverManager.getConnection(this.server, this.user, this.password);
-			
+			System.out.println("ok!");
 		} catch(ClassNotFoundException e){
 			System.out.println("Erro no Driver "+e.getMessage());
 			e.printStackTrace();

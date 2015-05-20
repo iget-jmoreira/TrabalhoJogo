@@ -1,9 +1,10 @@
 package TrabalhoJogo;
+
 import javax.swing.JFrame;
 
 
 public class Main {
-
+	
 	public static void main(String[] args) {
 //		Index page = new Index();
 		
@@ -11,6 +12,9 @@ public class Main {
 		
 		Game page = new Game("tinho744");
 
+//		Connect con = new Connect();
+//		con.teste();
+		
 //		Records page = new Records("tinho744");
 		
 //		Home page = new Home("tinho744");
