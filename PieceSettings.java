@@ -53,6 +53,8 @@ public class PieceSettings {
 			piecePositions[1] = x+","+(y+20);
 			piecePositions[2] = (x+20)+","+y;
 			piecePositions[3] = (x+20)+","+(y+20);
+			Game.sizeY = 40;
+			Game.sizeX = 40;
 			break;
 		case 2:
 			// L to top
@@ -60,6 +62,8 @@ public class PieceSettings {
 			piecePositions[1] = (x+20)+","+(y+20);
 			piecePositions[2] = (x+40)+","+(y+20);
 			piecePositions[3] = (x+40)+","+y;
+			Game.sizeY = 40;
+			Game.sizeX = 60;
 			break;
 		case 3:
 			// L to right
@@ -67,6 +71,8 @@ public class PieceSettings {
 			piecePositions[1] = x+","+(y+20);
 			piecePositions[2] = x+","+(y+40);
 			piecePositions[3] = (x+20)+","+(y+40);
+			Game.sizeY = 60;
+			Game.sizeX = 40;
 			break;
 		case 4:
 			// L to down
@@ -74,6 +80,7 @@ public class PieceSettings {
 			piecePositions[1] = (x+20)+","+y;
 			piecePositions[2] = (x+40)+","+y;
 			piecePositions[3] = x+","+(y+20);
+			Game.sizeY = 40;
 			break;
 		case 5:
 			// L to left
@@ -81,6 +88,8 @@ public class PieceSettings {
 			piecePositions[1] = (x+20)+","+(y+20);
 			piecePositions[2] = (x+20)+","+(y+40);
 			piecePositions[3] = x+","+(y+40);
+			Game.sizeY = 60;
+			Game.sizeX = 40;
 			break;
 		case 6:
 			// line standing
@@ -88,6 +97,8 @@ public class PieceSettings {
 			piecePositions[1] = x+","+(y+20);
 			piecePositions[2] = x+","+(y+40);
 			piecePositions[3] = x+","+(y+60);
+			Game.sizeY = 80;
+			Game.sizeX = 20;
 			break;
 		case 7:
 			// lying line
@@ -95,6 +106,8 @@ public class PieceSettings {
 			piecePositions[1] = (x+20)+","+y;
 			piecePositions[2] = (x+40)+","+y;
 			piecePositions[3] = (x+60)+","+y;
+			Game.sizeY = 20;
+			Game.sizeX = 80;
 			break;
 		case 8:
 			// S to top
@@ -102,6 +115,8 @@ public class PieceSettings {
 			piecePositions[1] = x+","+(y+20);
 			piecePositions[2] = (x+20)+","+(y+20);
 			piecePositions[3] = (x+20)+","+(y+40);
+			Game.sizeY = 60;
+			Game.sizeX = 40;
 			break;
 		case 9:
 			// S top right
@@ -109,6 +124,8 @@ public class PieceSettings {
 			piecePositions[1] = (x+40)+","+y;
 			piecePositions[2] = x+","+(y+20);
 			piecePositions[3] = (x+20)+","+(y+20);
+			Game.sizeY = 40;
+			Game.sizeX = 60;
 			break;
 		case 10:
 			// line-point to top
@@ -116,6 +133,8 @@ public class PieceSettings {
 			piecePositions[1] = x+","+(y+20);
 			piecePositions[2] = (x+20)+","+(y+20);
 			piecePositions[3] = (x+40)+","+(y+20);
+			Game.sizeY = 40;
+			Game.sizeX = 60;
 			break;
 		case 11:
 			// linte-point to right
@@ -123,6 +142,8 @@ public class PieceSettings {
 			piecePositions[1] = x+","+(y+20);
 			piecePositions[2] = x+","+(y+40);
 			piecePositions[3] = (x+20)+","+(y+20);
+			Game.sizeY = 60;
+			Game.sizeX = 40;
 			break;
 		case 12:
 			// line-point to down
@@ -130,6 +151,8 @@ public class PieceSettings {
 			piecePositions[1] = (x+20)+","+y;
 			piecePositions[2] = (x+40)+","+y;
 			piecePositions[3] = (x+20)+","+(y+20);
+			Game.sizeY = 40;
+			Game.sizeX = 60;
 			break;
 		case 13:
 			// line-point to left
@@ -137,6 +160,8 @@ public class PieceSettings {
 			piecePositions[1] = (x+20)+","+y;
 			piecePositions[2] = (x+20)+","+(y+20);
 			piecePositions[3] = (x+20)+","+(y+40);
+			Game.sizeY = 60;
+			Game.sizeX = 40;
 			break;
 		}
 		

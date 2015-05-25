@@ -16,10 +16,11 @@ import javax.swing.JPanel;
 public class Game extends JFrame {
 	String[] currentPosition;
 	int number = 0;
-	public int movementX = 40;
-	public int movementY = 10;
+	public int movementX = 205;
+	public int movementY = 20;
 	String username;
 	int currentPiece;
+	static int sizeX, sizeY;
 	/**
 	 * 
 	 */
@@ -61,6 +62,32 @@ public class Game extends JFrame {
 		ct.add(painel);
 	}
 	
+	public boolean passToDown(int sizeY){
+		int v = 380 - sizeY;
+		if(this.movementY >= v){
+			return false;
+		} else{
+			return true;
+		}
+	}
+	
+	public boolean passToLeft(int sizeX){
+		if(this.movementX <= 5){
+			return false;
+		} else{
+			return true;
+		}
+	}
+	
+	public boolean passToRight(int sizeX){
+		int v = 445 - sizeX;
+		if(this.movementX >= v){
+			return false;
+		} else{
+			return true;
+		}
+	}
+	
 	class GoDown extends Thread{
 		public void run(){
 			while(true){
@@ -70,14 +97,23 @@ public class Game extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				Game.this.movementY += 20;
-				Game.this.add(cube1);
-				Game.this.add(cube2);
-				Game.this.add(cube3);
-				Game.this.add(cube4);
-				PieceSettings p = new PieceSettings();
-				p.drawPiece(Game.this.movementX, Game.this.movementY, painel, Game.this.currentPiece, Game.this.username);
-				Game.this.repaint();
+				if(Game.this.passToDown(Game.this.sizeY) == true){
+					Game.this.movementY += 20;
+					Game.this.add(cube1);
+					Game.this.add(cube2);
+					Game.this.add(cube3);
+					Game.this.add(cube4);
+					PieceSettings p = new PieceSettings();
+					p.drawPiece(Game.this.movementX, Game.this.movementY, painel, Game.this.currentPiece, Game.this.username);
+					Game.this.repaint();
+				} else{
+					Random r = new Random();
+					Game.this.currentPiece = r.nextInt(13)+1;
+					PieceSettings p = new PieceSettings();
+					Game.this.movementX = 205;
+					Game.this.movementY = 0;
+					p.drawPiece(Game.this.movementX, Game.this.movementY, painel, Game.this.currentPiece, Game.this.username);
+				}
 			}
 		}
 	}
@@ -95,10 +131,14 @@ public class Game extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			if(dir.equals("R")){
-				Game.this.movementX += 20;
+				if(Game.this.passToRight(sizeX) == true){
+					Game.this.movementX += 20;
+				}
 			}
 			if(dir.equals("L")){
-				Game.this.movementX -= 20;
+				if(Game.this.passToLeft(sizeX) == true){
+					Game.this.movementX -= 20;
+				}
 			}
 			Game.this.add(cube1);
 			Game.this.add(cube2);
