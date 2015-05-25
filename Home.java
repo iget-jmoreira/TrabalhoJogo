@@ -27,8 +27,7 @@ public class Home extends JFrame{
 	painel.setLayout(layout);
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	double width = (screenSize.getWidth() / 2) - 200;
-	double height = (screenSize.getHeight() / 2) - 150;
-	setBounds((int) width, (int) height, 400, 300);
+	setBounds((int) width, 100, 400, 300);
 	
 	submit_play = new JButton("Play Game");
 	painel.add(submit_play, new GBC(1,1,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(40, 50, 15, 50).setFill(GBC.BOTH));

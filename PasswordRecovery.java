@@ -33,8 +33,7 @@ public class PasswordRecovery extends JFrame {
 		painel.setLayout(layout);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double width = (screenSize.getWidth() / 2) - 200;
-		double height = (screenSize.getHeight() / 2) - 275;
-		setBounds((int) width, (int) height, 400, 550);
+		setBounds((int) width, 100, 400, 550);
 				
 		question = new JLabel("Question");
 		painel.add(question, new GBC(1,1,1,1).setWeight(1, 1).setAnchor(GBC.WEST).setInsets(10, 40, 0, 0));

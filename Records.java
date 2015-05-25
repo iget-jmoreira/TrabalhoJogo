@@ -27,8 +27,7 @@ public class Records extends JFrame{
 		painel.setLayout(null);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double width = (screenSize.getWidth() / 2) - 300;
-		double height = (screenSize.getHeight() / 2) - 200;
-		setBounds((int) width, (int) height, 600, 400);
+		setBounds((int) width, 100, 600, 400);
 		
 		String columns[] = {"username", "score", "date"};
 		Connect c = new Connect();
