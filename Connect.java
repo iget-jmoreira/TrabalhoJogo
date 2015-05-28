@@ -121,22 +121,19 @@ public class Connect {
 	
 	public boolean recovery(String username, String answer, String pass1, String pass2){
 		Statement stmt;
-		ResultSet rs;
 		boolean returned = false;
 		if(pass1.equals(pass2)){
 			try{
 				Class.forName(this.driver);
 				conn = DriverManager.getConnection(this.server, this.user, this.password);
 				stmt = conn.createStatement();
-				rs = stmt.executeQuery("SELECT * FROM `users` WHERE username='"+username+"' AND answer='"+answer+"'");
-				if(rs.next())
-				{
-					returned = true;
-					JOptionPane.showMessageDialog(null, "Password Changed!", "Message!", JOptionPane.ERROR_MESSAGE);
-					Home home = new Home(username);
-					home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					home.setVisible(true);
-				}
+//				rs = stmt.executeQuery("SELECT * FROM `users` WHERE username='"+username+"' AND answer='"+answer+"'");
+				stmt.executeUpdate("UPDATE `users` SET password='"+pass1+"' WHERE username='"+username+"'");
+				returned = true;
+				JOptionPane.showMessageDialog(null, "Password Changed!", "Message!", JOptionPane.ERROR_MESSAGE);
+				Home home = new Home(username);
+				home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				home.setVisible(true);
 			} catch(ClassNotFoundException e){
 				System.out.println("Erro no Driver "+e.getMessage());
 				e.printStackTrace();
@@ -144,6 +141,8 @@ public class Connect {
 				System.out.println("Erro do BD "+e.getMessage());
 				e.printStackTrace();
 			}
+		} else{
+			JOptionPane.showMessageDialog(null, "Incorrect Passwords!", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		return returned;
 	}

@@ -5,6 +5,8 @@ import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -54,6 +56,7 @@ public class PasswordRecovery extends JFrame {
 		pass2 = new JLabel("* Password");
 		painel.add(pass2, new GBC(1,7,1,1).setWeight(1, 1).setAnchor(GBC.WEST).setInsets(0, 40, 0, 0));
 		input_pass2 = new JPasswordField();
+		input_pass2.addKeyListener(new PasswordRecovery.KeyRecovery());
 		painel.add(input_pass2, new GBC(1,8,1,1).setWeight(2, 0.5).setAnchor(GBC.NORTHWEST).setInsets(5, 25, 35, 25).setFill(GBC.BOTH));
 		
 		submit_recovery = new JButton("Confirm");
@@ -107,6 +110,39 @@ public class PasswordRecovery extends JFrame {
 			Index index = new Index();
 			index.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			index.setVisible(true);
+		}
+		
+	}
+	
+	class KeyRecovery implements KeyListener{
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getKeyCode() == KeyEvent.VK_ENTER){
+				String input_answer, pass1, pass2, username;
+				username = PasswordRecovery.this.username;
+				input_answer = PasswordRecovery.this.input_answer.getText();
+				pass1 = String.valueOf(PasswordRecovery.this.input_pass1.getPassword());
+				pass2 = String.valueOf(PasswordRecovery.this.input_pass2.getPassword());
+				Connect conn = new Connect();
+				boolean returned = conn.recovery(username, input_answer, pass1, pass2);
+				if(returned){
+					PasswordRecovery.this.setVisible(false);
+				}
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
 		
 	}

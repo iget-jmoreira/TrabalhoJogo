@@ -4,6 +4,9 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -60,6 +63,7 @@ public class Index extends JFrame {
 		painel.add(password);
 		input_password = new JPasswordField(12);
 		input_password.setBounds(50, 175, 260, 30);
+		input_password.addKeyListener(new Index.KeyLogin());
 		painel.add(input_password);
 		
 		submit_login = new JButton("Login");
@@ -177,6 +181,37 @@ public class Index extends JFrame {
 				Index.this.setVisible(false);
 			}
 		}		
+	}
+	
+	class KeyLogin implements KeyListener{
+
+		@Override
+		public void keyPressed(KeyEvent evt) {
+			// TODO Auto-generated method stub
+			System.out.println();
+			if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+				String username = Index.this.input_login.getText();
+				String password = String.valueOf(Index.this.input_password.getPassword());
+				Connect conn = new Connect();
+				boolean returned = conn.login(username, password);
+				if(returned == true){
+					Index.this.setVisible(false);
+				}
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 	
 }

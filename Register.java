@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -88,6 +90,7 @@ public class Register extends JFrame {
 		painel.add(answer);
 		input_answer = new JTextField();
 		input_answer.setBounds(40, 375, 260, 25);
+		input_answer.addKeyListener(new Register.KeyCreate());
 		painel.add(input_answer);
 		
 		submit_register = new JButton("Save Register");
@@ -208,6 +211,42 @@ public class Register extends JFrame {
 			if(returned == true){
 				Register.this.setVisible(false);
 			}
+			
+		}
+		
+	}
+	
+	class KeyCreate implements KeyListener{
+
+		@Override
+		public void keyPressed(KeyEvent evt) {
+			// TODO Auto-generated method stub
+			if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+				String username = Register.this.input_username.getText();
+				String email = Register.this.input_email.getText();
+				String pass1 = String.valueOf(Register.this.input_pass1.getPassword());
+				String pass2 = String.valueOf(Register.this.input_pass2.getPassword());
+				String question = String.valueOf(Register.this.input_question.getText());
+				String answer = String.valueOf(Register.this.input_answer.getText());
+				
+				Connect conn = new Connect();
+				boolean returned = conn.saveRegister(username, pass1, pass2, email, question, answer);
+				if(returned == true){
+					Register.this.setVisible(false);
+				}
+			}
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent arg0) {
+			// TODO Auto-generated method stub
 			
 		}
 		

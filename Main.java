@@ -6,11 +6,11 @@ import javax.swing.JFrame;
 public class Main {
 	
 	public static void main(String[] args) {
-//		Index page = new Index();
+		Index page = new Index();
 		
 //		Instructions page = new Instructions();
 		
-		Game page = new Game("tinho744");
+//		Game page = new Game("tinho744");
 
 //		Connect con = new Connect();
 //		con.teste();
@@ -21,8 +21,6 @@ public class Main {
 		
 		page.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		page.setVisible(true);
-		
-		
 	}
 
 }
