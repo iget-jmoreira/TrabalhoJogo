@@ -149,28 +149,13 @@ public class Connect {
 	
 	public void saveRecord(String username, int score){
 		Statement stmt;
-		ResultSet rs;
 		String date = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
 		
 		try{
 			Class.forName(this.driver);
 			conn = DriverManager.getConnection(this.server, this.user, this.password);
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT * FROM `users` WHERE username='"+username+"'");
-			int user_id = 0;
-			if(rs.next()){
-				user_id = rs.getInt("id");
-			}
-			rs.close();
-			stmt.close();
-			
-			if(user_id != 0){
-				stmt = conn.createStatement();
-				stmt.executeUpdate("INSERT INTO `records` (user_id,username,score, date) VALUES ('"+user_id+"', '"+username+"', '"+score+"', '"+date+"')");	
-				System.out.println("Cadastro Salvo");
-			} else{
-				System.out.println("Usuario nao encontrado");
-			}
+			stmt.executeUpdate("INSERT INTO `records` (username,score, date) VALUES ('"+username+"', '"+score+"', '"+date+"')");
 			stmt.close();
 			conn.close();
 			

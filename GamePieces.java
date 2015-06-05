@@ -1,6 +1,7 @@
 package TrabalhoJogo;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -8,6 +9,63 @@ import javax.swing.JPanel;
 
 public class GamePieces {
 	JLabel cube1, cube2, cube3, cube4;
+	public void getOptionalPieces(String username, Game g){
+		int aux = g.optionalPieces;
+		switch(g.randomPiece){
+		case 1:
+			g.randomPiece = 1;
+			g.optionalPieces = 1;
+			break;
+		case 2:
+			g.randomPiece = 3;
+			g.optionalPieces = 2;
+			break;
+		case 3:
+			g.randomPiece = 2;
+			g.optionalPieces = 3;
+			break;
+		case 4:
+			g.randomPiece = 5;
+			g.optionalPieces = 6;
+			break;
+		case 5:
+			g.randomPiece = 6;
+			g.optionalPieces = 7;
+			break;
+		case 6:
+			g.randomPiece = 7;
+			g.optionalPieces = 4;
+			break;
+		case 7:
+			g.randomPiece = 4;
+			g.optionalPieces = 5;
+			break;
+		case 8:
+			g.randomPiece = 9;
+			g.optionalPieces = 10;
+			break;
+		case 9:
+			g.randomPiece = 10;
+			g.optionalPieces = 11;
+			break;
+		case 10:
+			g.randomPiece = 11;
+			g.optionalPieces = 8;
+			break;
+		case 11:
+			g.randomPiece = 8;
+			g.optionalPieces = 9;
+			break;
+		case 12:
+			g.randomPiece = 13;
+			g.optionalPieces = 13;
+			break;
+		case 13:
+			g.randomPiece = 12;
+			g.optionalPieces = 12;
+			break;
+		}
+	}
 	public void drawPiece(String coord, int randomPiece, JPanel painel){
 		int x, y;
 		String[] coords = coord.split(",");
@@ -337,11 +395,11 @@ public class GamePieces {
 					returned = false;
 				}
 				int n[] = new int[4];
-				n[0] = Integer.parseInt(aux0[1]) + 20;
-				n[1] = Integer.parseInt(aux1[1]) + 20;
-				n[2] = Integer.parseInt(aux2[1]) + 20;
-				n[3] = Integer.parseInt(aux3[1]) + 20;
-				if((n[0] == 390) || (n[1] == 390) || (n[2] == 390) || (n[3] == 390)){
+				n[0] = Integer.parseInt(aux0[1]);
+				n[1] = Integer.parseInt(aux1[1]);
+				n[2] = Integer.parseInt(aux2[1]);
+				n[3] = Integer.parseInt(aux3[1]);
+				if((n[0] == 350) || (n[1] == 350) || (n[2] == 350) || (n[3] == 350)){
 					returned = false;
 				}
 			}
@@ -351,24 +409,24 @@ public class GamePieces {
 			String[] aux2 = pieces[2].split(",");
 			String[] aux3 = pieces[3].split(",");
 			for(int i = 0; i < coords.size(); i++){
-				if((coords.get(i).equals(aux0[0]+","+(Integer.parseInt(aux0[1]) + 40)))){
+				if((coords.get(i).equals(aux0[0]+","+(Integer.parseInt(aux0[1]) + 60)))){
 					returned = false;
 				}
-				if((coords.get(i).equals(aux1[0]+","+(Integer.parseInt(aux1[1]) + 40)))){
+				if((coords.get(i).equals(aux1[0]+","+(Integer.parseInt(aux1[1]) + 60)))){
 					returned = false;
 				}
-				if((coords.get(i).equals(aux2[0]+","+(Integer.parseInt(aux2[1]) + 40)))){
+				if((coords.get(i).equals(aux2[0]+","+(Integer.parseInt(aux2[1]) + 60)))){
 					returned = false;
 				}
-				if((coords.get(i).equals(aux3[0]+","+(Integer.parseInt(aux3[1]) + 40)))){
+				if((coords.get(i).equals(aux3[0]+","+(Integer.parseInt(aux3[1]) + 60)))){
 					returned = false;
 				}
 				int n[] = new int[4];
-				n[0] = Integer.parseInt(aux0[1]) + 40;
-				n[1] = Integer.parseInt(aux1[1]) + 40;
-				n[2] = Integer.parseInt(aux2[1]) + 40;
-				n[3] = Integer.parseInt(aux3[1]) + 40;
-				if((n[0] == 390) || (n[1] == 390) || (n[2] == 390) || (n[3] == 390)){
+				n[0] = Integer.parseInt(aux0[1]) + 60;
+				n[1] = Integer.parseInt(aux1[1]) + 60;
+				n[2] = Integer.parseInt(aux2[1]) + 60;
+				n[3] = Integer.parseInt(aux3[1]) + 60;
+				if((n[0] >= 350) || (n[1] >= 350) || (n[2] >= 350) || (n[3] >= 350)){
 					returned = false;
 				}
 			}
@@ -477,4 +535,34 @@ public class GamePieces {
 			break;
 		}
 	}
+	
+	public void clearLine(ArrayList<String> coords, ArrayList<Integer> lines){
+		int y = 350, x = 0, count = 0;
+		while(y > 10){
+			
+			while(x <= 380){
+				if(coords.indexOf(x+","+y) >= 0){
+					count++;
+				}
+				if(count == 20){
+					int xAux = 0;
+					for(int n = 0; n < coords.size(); n++){
+						while(xAux <= 380){
+							if(coords.get(n).equals(xAux+","+y)){
+//								coords.remove(n);
+								System.out.println(coords.get(n));
+								///PROBLEMA
+							}
+						}
+					}
+				}
+				x += 20;
+			}
+			if(count < 20){
+				count = 0;
+			}
+			y -= 20;
+		}
+	}
+	
 }
