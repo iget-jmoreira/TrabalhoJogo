@@ -9,7 +9,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.File;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -22,13 +28,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Game extends JFrame{
-	boolean stopThread = false;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	boolean stopThread = false, endThread = false;
 	JPanel painel = new JPanel();
 	JPanel gameStats = new JPanel();
 	JLabel c, current_score, score_title, current_level, level_title;
-	int randomPiece, score, speedThread = 1000, speedThreadAux = 0, level;
+	int randomPiece, score, speedThread = 500, speedThreadAux = 0, level;
 	String coord = "200,10", dir, username;
 	ArrayList<String> coords = new ArrayList<String>();
+	ArrayList<Integer> lines = new ArrayList<Integer>();
 	int optionalPieces = 1;
 	JMenuBar menuBar;
 	JMenu menu;
@@ -40,13 +51,15 @@ public class Game extends JFrame{
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double width = (screenSize.getWidth() / 2) - 300;
 		setBounds((int) width, 100, 600, 402);
+		
 		painel.setLayout(null);
 		painel.setBounds(0, 30, 400, 345);
 		painel.setBackground(Color.WHITE);
 		gameStats.setLayout(null);
+		gameStats.setBounds(400, 0, 200, 402);
 		
-		Action goHome = new GoHomeAction();
-		Action continueStopGame = new ContinueStopGameAction();
+		Action quitGame = new QuitGameAction();
+//		Action muteUnmuteGame = new MuteUnmuteGameAction();
 		
 		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 600, 30);
@@ -54,16 +67,16 @@ public class Game extends JFrame{
 		menu = new JMenu("Menu");
 		menuBar.add(menu);
 		
-		menuItem = new JMenuItem("Continue/Pause Game");
-		menuItem.addActionListener(continueStopGame);
-		menu.add(menuItem);
-		menuItem = new JMenuItem("Go Home");
-		menuItem.addActionListener(goHome);
+//		menuItem = new JMenuItem("Mute/Unmute Game");
+//		menuItem.addActionListener(muteUnmuteGame);
+//		menu.add(menuItem);
+		menuItem = new JMenuItem("Quit Game");
+		menuItem.addActionListener(quitGame);
 		menu.add(menuItem);
 		gameStats.add(menuBar);
 		
 		this.randomPiece = new Random().nextInt(13)+1;
-//		this.randomPiece = 2;
+//		this.randomPiece = 3;
 		GamePieces gp = new GamePieces();
 		gp.drawPiece(this.coord, this.randomPiece, painel);
 		
@@ -92,37 +105,37 @@ public class Game extends JFrame{
 		ct.add(gameStats);
 	}
 	
-	public class GoHomeAction extends AbstractAction{
+	public class QuitGameAction extends AbstractAction{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			
+			Game.this.endThread = true;
+			Game.this.setVisible(false);
+			Game.this.dispose();
+			Home h = new Home(Game.this.username);
+			h.setVisible(true);
+			h.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
 		
 	}
 	
-	public class ContinueStopGameAction extends AbstractAction{
+	public class MuteUnmuteGameAction extends AbstractAction{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			if(Game.this.speedThreadAux == 0){
-				Game.this.speedThreadAux = Game.this.speedThread;
-				Game.this.speedThread = 5000;
-				String[] aux = Game.this.coord.split(",");
-				int newY = Integer.parseInt(aux[1]) - 20;
-				Game.this.coord = aux[0]+","+newY;
-				System.out.println(Game.this.speedThread+" - normal");
-				System.out.println(Game.this.speedThreadAux+" - aux");
-			} else{
-				Game.GoDown.currentThread().getState();
-				Game.this.speedThread = Game.this.speedThreadAux;
-				Game.this.speedThreadAux = 0;
-				System.out.println(Game.this.speedThread+" - normal");
-				System.out.println(Game.this.speedThreadAux+" - aux");
-				Game.this.painel.repaint();
-			}
+//			Music m = new Music();
 		}
 		
 	}
@@ -160,7 +173,7 @@ public class Game extends JFrame{
 		public void keyPressed(KeyEvent evt) {
 			// TODO Auto-generated method stub
 			GamePieces gp = new GamePieces();
-			if(evt.getKeyCode() == KeyEvent.VK_D){
+			if((evt.getKeyCode() == KeyEvent.VK_D) || (evt.getKeyCode() == KeyEvent.VK_RIGHT)){
 				if(gp.movePiece(Game.this.coords, Game.this.coord, "right", Game.this.randomPiece)){
 					String[] aux = Game.this.coord.split(",");
 					int newX = Integer.parseInt(aux[0]) + 20;
@@ -169,7 +182,7 @@ public class Game extends JFrame{
 					Game.this.loadPieces();
 					gp.drawPiece(Game.this.coord, Game.this.randomPiece, Game.this.painel);
 				}
-			} else if(evt.getKeyCode() == KeyEvent.VK_A){
+			} else if((evt.getKeyCode() == KeyEvent.VK_A) || (evt.getKeyCode() == KeyEvent.VK_LEFT)){
 				if(gp.movePiece(Game.this.coords, Game.this.coord, "left", Game.this.randomPiece)){
 					String[] aux = Game.this.coord.split(",");
 					int newX = Integer.parseInt(aux[0]) - 20;
@@ -178,7 +191,7 @@ public class Game extends JFrame{
 					Game.this.loadPieces();
 					gp.drawPiece(Game.this.coord, Game.this.randomPiece, Game.this.painel);
 				}
-			} else if(evt.getKeyCode() == KeyEvent.VK_S){
+			} else if((evt.getKeyCode() == KeyEvent.VK_S) || (evt.getKeyCode() == KeyEvent.VK_DOWN)){
 				if(gp.movePiece(Game.this.coords, Game.this.coord, "superDown", Game.this.randomPiece)){
 					String[] aux = Game.this.coord.split(",");
 					int newY = Integer.parseInt(aux[1]) + 40;
@@ -188,12 +201,13 @@ public class Game extends JFrame{
 					gp.drawPiece(Game.this.coord, Game.this.randomPiece, Game.this.painel);
 				}
 			} else if(evt.getKeyCode() == KeyEvent.VK_SPACE){
-				gp.getOptionalPieces(Game.this.username, Game.this);
-				painel.removeAll();
-				Game.this.loadPieces();
-				gp.drawPiece(Game.this.coord, Game.this.randomPiece, Game.this.painel);
-				Game.this.painel.repaint();
-				//CRIAR CONDIÇÃO PRA NAO PODER VIRAR
+				if(gp.movePiece(Game.this.coords, Game.this.coord, "rotate", Game.this.optionalPieces)){
+					gp.getOptionalPieces(Game.this.username, Game.this);
+					painel.removeAll();
+					Game.this.loadPieces();
+					gp.drawPiece(Game.this.coord, Game.this.randomPiece, Game.this.painel);
+					Game.this.painel.repaint();
+				}
 			}
 		}
 
@@ -214,6 +228,9 @@ public class Game extends JFrame{
 	class GoDown extends Thread{
 		public void run() {
 			while(true){
+				if(Game.this.endThread == true){
+					break;
+				}
 				try {
 					Thread.sleep(Game.this.speedThread);
 				} catch (InterruptedException e) {
@@ -229,9 +246,23 @@ public class Game extends JFrame{
 			
 				if(g.movePiece(Game.this.coords, Game.this.coord, "down", Game.this.randomPiece)){
 					painel.removeAll();
+					if(Game.this.coords.size() > 1){
+						int n = g.removeLine(Game.this.lines, Game.this.coords);
+						Game.this.score += n*60;
+						if(n > 0){
+							Game.this.loadScores();
+							if((Game.this.level > 0) && (Game.this.score >= (200*Game.this.level))){
+								Game.this.level += 1;
+								Game.this.speedThread /= 1.5;
+							} else if(Game.this.score >= 200){
+								Game.this.level += 1;
+							}
+							Game.this.loadLevels();
+							Game.this.gameStats.repaint();
+						}
+					}
 					Game.this.loadPieces();
 					g.drawPiece(Game.this.coord, Game.this.randomPiece, Game.this.painel);
-					
 				} else{
 					if(Game.this.coord.equals("200,30")){
 						Connect c = new Connect();
@@ -241,18 +272,20 @@ public class Game extends JFrame{
 					} else{
 						Game.this.score += 20;
 						Game.this.loadScores();
-						if(Game.this.score == 100){
+						if((Game.this.level > 0) && (Game.this.score%(200*Game.this.level) == 0)){
+							Game.this.level += 1;
+							Game.this.speedThread /= 1.5;
+						} else if(Game.this.score%200 == 0){
 							Game.this.level += 1;
 						}
 						Game.this.loadLevels();
-						g.addPositions(Game.this.coord, Game.this.randomPiece, Game.this.coords);
-//						System.out.println(Game.this.coords);
+						g.addPositions(Game.this.coord, Game.this.randomPiece, Game.this.coords, Game.this.lines);
 						Game.this.coord = "200,10";
 						Game.this.randomPiece = new Random().nextInt(13)+1;
-//						Game.this.randomPiece = 1;
+//						Game.this.randomPiece = 3;
 						g.drawPiece(Game.this.coord, Game.this.randomPiece, Game.this.painel);
 					}
-					Game.this.gameStats.repaint();
+					Game.this.gameStats.repaint(400,30,200,202);
 				}
 				Game.this.painel.repaint();
 			}

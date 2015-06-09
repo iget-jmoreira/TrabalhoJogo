@@ -1,6 +1,7 @@
 package TrabalhoJogo;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +25,8 @@ public class Records extends JFrame{
 	
 	public Records(String username){
 		setTitle("Records");
-		painel.setLayout(null);
+		GridBagLayout layout = new GridBagLayout();
+		painel.setLayout(layout);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double width = (screenSize.getWidth() / 2) - 300;
 		setBounds((int) width, 100, 600, 400);
@@ -37,12 +39,10 @@ public class Records extends JFrame{
 		table.setValueAt(this.turnBold("Username"), 0, 0);
 		table.setValueAt(this.turnBold("Score"), 0, 1);
 		table.setValueAt(this.turnBold("Date"), 0, 2);
-		table.setBounds(50, 20, 500, 176);
-		painel.add(table);
+		painel.add(table, new GBC(1,1,1,1).setWeight(1, 1).setFill(GBC.BOTH));
 		
 		submit_back = new JButton("Voltar");
-		submit_back.setBounds(200, 300, 200, 30);
-		painel.add(submit_back);
+		painel.add(submit_back, new GBC(1,2,1,1).setWeight(1, 1));
 		
 		ClickBack back = new ClickBack(username);
 		submit_back.addActionListener(back);

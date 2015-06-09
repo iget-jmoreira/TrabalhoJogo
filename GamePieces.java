@@ -2,6 +2,7 @@ package TrabalhoJogo;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -430,12 +431,39 @@ public class GamePieces {
 					returned = false;
 				}
 			}
+		} else if(dir.equals("rotate")){
+			String[] aux0 = pieces[0].split(",");
+			String[] aux1 = pieces[1].split(",");
+			String[] aux2 = pieces[2].split(",");
+			String[] aux3 = pieces[3].split(",");
+			for(int i = 0; i < coords.size(); i++){
+				if((coords.get(i).equals(aux0[0]+","+(Integer.parseInt(aux0[1]) + 20)))){
+					returned = false;
+				}
+				if((coords.get(i).equals(aux1[0]+","+(Integer.parseInt(aux1[1]) + 20)))){
+					returned = false;
+				}
+				if((coords.get(i).equals(aux2[0]+","+(Integer.parseInt(aux2[1]) + 20)))){
+					returned = false;
+				}
+				if((coords.get(i).equals(aux3[0]+","+(Integer.parseInt(aux3[1]) + 20)))){
+					returned = false;
+				}
+				int n[] = new int[4];
+				n[0] = Integer.parseInt(aux0[1]);
+				n[1] = Integer.parseInt(aux1[1]);
+				n[2] = Integer.parseInt(aux2[1]);
+				n[3] = Integer.parseInt(aux3[1]);
+				if((n[0] >= 350) || (n[1] >= 350) || (n[2] >= 350) || (n[3] >= 350)){
+					returned = false;
+				}
+			}
 		}
 		
 		return returned;
 	}
 	
-	public void addPositions(String coord, int randomPiece, ArrayList<String> coords){
+	public void addPositions(String coord, int randomPiece, ArrayList<String> coords, ArrayList<Integer> lines){
 		if(coords.size() == 1){
 			coords.clear();
 		}
@@ -448,6 +476,10 @@ public class GamePieces {
 			coords.add((x+20)+","+y);
 			coords.add(x+","+(y+20));
 			coords.add((x+20)+","+(y+20));
+			lines.add(y);
+			lines.add(y);
+			lines.add(y+20);
+			lines.add(y+20);
 			break;
 		case 2:
 			// linha em pe
@@ -455,6 +487,10 @@ public class GamePieces {
 			coords.add(x+","+(y+20));
 			coords.add(x+","+(y+40));
 			coords.add(x+","+(y+60));
+			lines.add(y);
+			lines.add(y+20);
+			lines.add(y+40);
+			lines.add(y+60);
 			break;
 		case 3:
 			// linha deitada
@@ -462,6 +498,10 @@ public class GamePieces {
 			coords.add((x+20)+","+y);
 			coords.add((x+40)+","+y);
 			coords.add((x+60)+","+y);
+			lines.add(y);
+			lines.add(y);
+			lines.add(y);
+			lines.add(y);
 			break;
 		case 4:
 			// linha com ponto pra cima
@@ -469,6 +509,10 @@ public class GamePieces {
 			coords.add((x+20)+","+y);
 			coords.add((x+20)+","+(y+20));
 			coords.add((x+40)+","+(y+20));
+			lines.add(y+20);
+			lines.add(y);
+			lines.add(y+20);
+			lines.add(y+20);
 			break;
 		case 5:
 			// linha com ponto pra direita
@@ -476,6 +520,10 @@ public class GamePieces {
 			coords.add(x+","+(y+20));
 			coords.add((x+20)+","+(y+20));
 			coords.add(x+","+(y+40));
+			lines.add(y);
+			lines.add(y+20);
+			lines.add(y+20);
+			lines.add(y+40);
 			break;
 		case 6:
 			// linha com ponto para baixo
@@ -483,6 +531,10 @@ public class GamePieces {
 			coords.add((x+20)+","+y);
 			coords.add((x+40)+","+y);
 			coords.add((x+20)+","+(y+20));
+			lines.add(y);
+			lines.add(y);
+			lines.add(y);
+			lines.add(y+20);
 			break;
 		case 7:
 			// linha com ponto para esquerda
@@ -490,6 +542,10 @@ public class GamePieces {
 			coords.add((x+20)+","+(y+20));
 			coords.add(x+","+(y+20));
 			coords.add((x+20)+","+(y+40));
+			lines.add(y);
+			lines.add(y+20);
+			lines.add(y+20);
+			lines.add(y+40);
 			break;
 		case 8:
 			// L pra cima
@@ -497,6 +553,10 @@ public class GamePieces {
 			coords.add((x+20)+","+(y+20));
 			coords.add((x+40)+","+(y+20));
 			coords.add((x+40)+","+y);
+			lines.add(y+20);
+			lines.add(y+20);
+			lines.add(y+20);
+			lines.add(y);
 			break;
 		case 9:
 			// L pra direita
@@ -504,6 +564,10 @@ public class GamePieces {
 			coords.add(x+","+(y+20));
 			coords.add(x+","+(y+40));
 			coords.add((x+20)+","+(y+40));
+			lines.add(y);
+			lines.add(y+20);
+			lines.add(y+40);
+			lines.add(y+40);
 			break;
 		case 10:
 			// L pra baixo
@@ -511,6 +575,10 @@ public class GamePieces {
 			coords.add((x+20)+","+y);
 			coords.add((x+40)+","+y);
 			coords.add(x+","+(y+20));
+			lines.add(y);
+			lines.add(y);
+			lines.add(y);
+			lines.add(y+20);
 			break;
 		case 11:
 			// L pra esquerda
@@ -518,6 +586,10 @@ public class GamePieces {
 			coords.add((x+20)+","+y);
 			coords.add((x+20)+","+(y+20));
 			coords.add((x+20)+","+(y+40));
+			lines.add(y);
+			lines.add(y);
+			lines.add(y+20);
+			lines.add(y+40);
 			break;
 		case 12:
 			// S em pé
@@ -525,6 +597,10 @@ public class GamePieces {
 			coords.add(x+","+(y+20));
 			coords.add((x+20)+","+(y+20));
 			coords.add((x+20)+","+(y+40));
+			lines.add(y);
+			lines.add(y+20);
+			lines.add(y+20);
+			lines.add(y+40);
 			break;
 		case 13:
 			// S deitado
@@ -532,36 +608,80 @@ public class GamePieces {
 			coords.add((x+40)+","+y);
 			coords.add(x+","+(y+20));
 			coords.add((x+20)+","+(y+20));
+			lines.add(y);
+			lines.add(y);
+			lines.add(y+20);
+			lines.add(y+20);
 			break;
 		}
 	}
 	
-	public void clearLine(ArrayList<String> coords, ArrayList<Integer> lines){
-		int y = 350, x = 0, count = 0;
-		while(y > 10){
-			
-			while(x <= 380){
-				if(coords.indexOf(x+","+y) >= 0){
+	public int removeLine(ArrayList<Integer> lines, ArrayList<String> coords){
+		ArrayList<Integer> removed = new ArrayList<Integer>();
+		int size = lines.size();
+		
+		for(int i=0; i<size; i++){
+			int count = 0;
+			for(int a = 0; a<size; a++){
+				if(Integer.toString(lines.get(i)).equals(Integer.toString(lines.get(a)))){
 					count++;
 				}
 				if(count == 20){
-					int xAux = 0;
-					for(int n = 0; n < coords.size(); n++){
-						while(xAux <= 380){
-							if(coords.get(n).equals(xAux+","+y)){
-//								coords.remove(n);
-								System.out.println(coords.get(n));
-								///PROBLEMA
-							}
-						}
+					if(!removed.contains(lines.get(i))){
+						removed.add(lines.get(i));
 					}
 				}
-				x += 20;
 			}
-			if(count < 20){
-				count = 0;
+		}
+		removeLines(removed, lines);
+		removeCoords(removed, coords);
+		int n = removed.size();
+		removed.clear();
+		return n;
+	}
+	
+	public void removeCoords(ArrayList<Integer> removed, ArrayList<String> coords){
+		for(int i = 0; i<coords.size(); i++){
+			String aux[] = coords.get(i).split(",");
+			int y = Integer.parseInt(aux[1]);
+			for(int l = 0; l<removed.size(); l++){
+				if(removed.get(l) == y){
+					coords.remove(i);
+					i--;
+				}
 			}
-			y -= 20;
+		}
+		turnDownCoords(removed, coords);
+	}
+	
+	public void removeLines(ArrayList<Integer> removed, ArrayList<Integer> lines){
+		for(int i = 0; i<removed.size(); i++){
+			while(lines.contains(removed.get(i))){
+				lines.remove(lines.indexOf(removed.get(i)));
+			}
+		}
+		turnDownLines(removed, lines);
+	}
+	
+	public void turnDownCoords(ArrayList<Integer> removed, ArrayList<String> coords){
+		for(int i = 0; i<removed.size(); i++){
+			for(int l = 0; l<coords.size(); l++){
+				String[] aux = coords.get(l).split(",");
+				int y = Integer.parseInt(aux[1]);
+				if(y < removed.get(i)){
+					coords.set(l, aux[0]+","+(y+20));
+				}
+			}
+		}
+	}
+	
+	public void turnDownLines(ArrayList<Integer> removed, ArrayList<Integer> lines){
+		for(int i = 0; i<removed.size(); i++){
+			for(int l = 0; l<lines.size(); l++){
+				if(lines.get(l) < removed.get(i)){
+					lines.set(l, (lines.get(l) + 20));
+				}
+			}
 		}
 	}
 	

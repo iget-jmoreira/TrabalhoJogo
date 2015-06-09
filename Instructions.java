@@ -41,7 +41,10 @@ public class Instructions extends JFrame{
 		painel.add(toolbar);
 		
 		JTextPane tp = new JTextPane();
-		tp.setText("Instructions\nMy Instructions Here");
+		tp.setText("OBJETIVO:\n >> Encaixe as peças para completar linhas e destrui-las, fazendo com que suas peças não cheguem ate o topo."
+				+ "\nCaso chegue ao topo o jogo termina.\n\nTECLAS:\n >> Use as setas direcionais ou as letras 'a' e 'd' para mover a peça para"
+				+ "esquerda ou direita.\n >> Use a seta direcional para baixo ou a letra 'd' para descer a peça mais rápido.\n"
+				+ " >> Use a tecla 'espaço' para girar a peça.");
 		tp.setBounds(0, 30, 450, 200);
 		painel.add(tp);
 		

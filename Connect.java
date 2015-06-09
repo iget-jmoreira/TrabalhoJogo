@@ -171,11 +171,11 @@ public class Connect {
 	public String[][] getRecords(){
 		ResultSet rs;
 		Statement stmt;
-		String records[][] = new String[11][3];
+		String records[][] = new String[15][3];
 		try{
 			Class.forName(this.driver);
 			conn = DriverManager.getConnection(this.server, this.user, this.password);
-			stmt = conn.createStatement();
+			stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			rs = stmt.executeQuery("SELECT * FROM records ORDER BY score DESC");
 			int i = 1;
 			while(rs.next())

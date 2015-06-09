@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 public class Main {
 	
 	public static void main(String[] args) {
-//		Index page = new Index();
+		Index page = new Index();
 		
 //		Instructions page = new Instructions();
 		
@@ -17,7 +17,7 @@ public class Main {
 		
 //		Records page = new Records("tinho744");
 		
-		Home page = new Home("tinho744");
+//		Home page = new Home("tinho744");
 		
 		page.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		page.setVisible(true);

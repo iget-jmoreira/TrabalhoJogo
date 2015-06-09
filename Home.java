@@ -23,20 +23,21 @@ public class Home extends JFrame{
 	
 	public Home(String username){
 	setTitle(username);
-	GridBagLayout layout = new GridBagLayout();
-	painel.setLayout(layout);
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	double width = (screenSize.getWidth() / 2) - 200;
-	setBounds((int) width, 100, 400, 300);
+	setBounds((int) width, 100, 400, 150);
 	
 	submit_play = new JButton("Play Game");
-	painel.add(submit_play, new GBC(1,1,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(40, 50, 15, 50).setFill(GBC.BOTH));
+	painel.add(submit_play);
+//	painel.add(submit_play, new GBC(1,1,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(40, 50, 15, 50).setFill(GBC.BOTH));
 	
 	submit_records = new JButton("Records");
-	painel.add(submit_records, new GBC(1,2,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0,50,15,50).setFill(GBC.BOTH));
+	painel.add(submit_records);
+//	painel.add(submit_records, new GBC(1,2,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0,50,15,50).setFill(GBC.BOTH));
 	
 	submit_quit = new JButton("Quit Game");
-	painel.add(submit_quit, new GBC(1,3,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0,50,40,50).setFill(GBC.BOTH));
+	painel.add(submit_quit);
+//	painel.add(submit_quit, new GBC(1,3,1,1).setWeight(1, 0.3).setAnchor(GBC.CENTER).setInsets(0,50,40,50).setFill(GBC.BOTH));
 	
 	ClickPlay play = new ClickPlay(username);
 	submit_play.addActionListener(play);
