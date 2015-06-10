@@ -1,8 +1,6 @@
 package TrabalhoJogo;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -11,7 +9,6 @@ import javax.swing.JPanel;
 public class GamePieces {
 	JLabel cube1, cube2, cube3, cube4;
 	public void getOptionalPieces(String username, Game g){
-		int aux = g.optionalPieces;
 		switch(g.randomPiece){
 		case 1:
 			g.randomPiece = 1;

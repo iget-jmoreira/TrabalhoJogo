@@ -9,13 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
-import java.io.File;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -35,8 +29,8 @@ public class Game extends JFrame{
 	boolean stopThread = false, endThread = false;
 	JPanel painel = new JPanel();
 	JPanel gameStats = new JPanel();
-	JLabel c, current_score, score_title, current_level, level_title;
-	int randomPiece, score, speedThread = 500, speedThreadAux = 0, level;
+	JLabel c, current_score, score_title, current_level, level_title, current_timer, timer_title;
+	int randomPiece, score, speedThread = 500, speedThreadAux = 0, level, timer = 30;
 	String coord = "200,10", dir, username;
 	ArrayList<String> coords = new ArrayList<String>();
 	ArrayList<Integer> lines = new ArrayList<Integer>();
@@ -97,6 +91,9 @@ public class Game extends JFrame{
 		
 		GoDown g = new GoDown();
 		g.start();
+		
+		Timer t = new Timer();
+		t.start();
 		
 		addKeyListener(new Game.Move());
 		
@@ -258,7 +255,7 @@ public class Game extends JFrame{
 								Game.this.level += 1;
 							}
 							Game.this.loadLevels();
-							Game.this.gameStats.repaint();
+							Game.this.gameStats.repaint(400,30,200,202);
 						}
 					}
 					Game.this.loadPieces();
@@ -268,6 +265,11 @@ public class Game extends JFrame{
 						Connect c = new Connect();
 						c.saveRecord(Game.this.username, Game.this.score);
 						JOptionPane.showMessageDialog(null, "Game Over!", "OOPS...", JOptionPane.ERROR_MESSAGE);
+						Game.this.setVisible(false);
+						Home h = new Home(Game.this.username);
+						h.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						h.setVisible(true);
+						Game.this.stopThread = true;
 						break;
 					} else{
 						Game.this.score += 20;
@@ -285,9 +287,33 @@ public class Game extends JFrame{
 //						Game.this.randomPiece = 3;
 						g.drawPiece(Game.this.coord, Game.this.randomPiece, Game.this.painel);
 					}
-					Game.this.gameStats.repaint(400,30,200,202);
+					Game.this.gameStats.repaint(400,30,200,130);
 				}
 				Game.this.painel.repaint();
+			}
+		}
+	}
+	
+	class Timer extends Thread{
+		public void run(){
+			while (true) {
+				if(Game.this.endThread == true){
+					break;
+				}
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if((Game.this.timer - 1) < 0){
+					//altera velocidade
+					Game.this.speedThread += 300;
+					Game.this.timer = 30;
+				} else{
+					Game.this.timer -= 1;
+				}
+				System.out.println(Game.this.timer);
 			}
 		}
 	}
